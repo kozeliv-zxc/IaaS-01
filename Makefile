@@ -9,6 +9,6 @@ deps-config:
 	sudo mkdir -p /etc/kolla
 	sudo chown $(user):$(user) /etc/kolla
 	cp -r /home/$(user)/deploy/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
-	cp -r /path/to/venv/share/kolla-ansible/ansible /etc/kolla
+	cp -r /home/$(user)/deploy/share/kolla-ansible/ansible /etc/kolla
 	source /home/$(user)/deploy/bin/activate && kolla-ansible install-deps
 	source /home/$(user)/deploy/bin/activate && kolla-genpwd
