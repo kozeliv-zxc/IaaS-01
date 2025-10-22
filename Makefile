@@ -1,4 +1,4 @@
-user = $(whoami)
+user = $(shell whoami)
 
 deps-config:
 	sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
