@@ -1,11 +1,10 @@
 SHELL := /bin/bash
 user = $(shell whoami)
-os = $(shell uname -v)
-apt = $(shell which apt)
-dnf = $(shell which dnf)
+apt := $(shell which apt)
+dnf := $(shell which dnf)
 
 install-deps:
-ifdef dnf
+ifdef $(dnf)
 	sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
 else
 	ifdef apt
