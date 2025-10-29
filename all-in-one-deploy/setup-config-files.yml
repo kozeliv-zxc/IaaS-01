@@ -18,13 +18,13 @@
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
         regexp: '#network_interface: "eth0"'
-        replace: 'network_interface: "ens18"'
+        replace: 'network_interface: "enp6s18"'
     - name: Replace neutron_external_interface
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
         regexp: '#network_interface: "eth1"'
-        replace: 'network_interface: "ens19"'
+        replace: 'network_interface: "enp6s18"'
     - name: Replace kolla_internal_vip_address
       become: true
       ansible.builtin.replace:
