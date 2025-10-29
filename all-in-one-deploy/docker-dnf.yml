@@ -1,0 +1,10 @@
+- name: Add docker repo (dnf)
+  become: true
+  ansible.builtin.command: dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+  register: output
+  changed_when: output.rc == 0
+- name: Install docker (dnf)
+  become: true
+  ansible.builtin.command: dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+  register: output
+  changed_when: output.rc == 0

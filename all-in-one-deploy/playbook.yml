@@ -1,5 +1,28 @@
-- name: Install docker
-  ansible.builtin.import_playbook: docker.yml
+- name: Main playbook
+  hosts: localhost
+  gather_facts: true
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Docker inititial configuration (dnf)
+      ansible.builtin.include_tasks: docker-dnf.yml
+      when: ansible_facts['pkg_mgr'] == "dnf"
+
+    - name: Docker inititial configuration (apt)
+      ansible.builtin.include_tasks: docker-apt.yml
+      when: ansible_facts['pkg_mgr'] == "apt"
+
+    - name: Enable Docker service
+      become: true
+      ansible.builtin.systemd:
+        name: docker
+        enabled: true
+
+    - name: Start Docker service
+      become: true
+      ansible.builtin.systemd:
+        name: docker
+        state: started
 
 - name: Configuring globals.yml settings
   ansible.builtin.import_playbook: setup-config-files.yml

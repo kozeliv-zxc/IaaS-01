@@ -1,0 +1,7 @@
+tasks:
+  - name: concac
+    ansible.builtin.debug:
+      msg: "ok"
+  - name: concac2
+    ansible.builtin.debug:
+      msg: "hihi"
