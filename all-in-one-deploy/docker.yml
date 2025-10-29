@@ -1,8 +1,13 @@
 - name: Docker related tasks
   hosts: localhost
+  gather_facts: true
   remote_user: root
   connection: local
   tasks:
+    - name: Debug
+      become: true
+      ansible.builtin.debug:
+        msg: "{{ ansible_distribution }}"
     - name: Add docker repo
       become: true
       ansible.builtin.command: dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
