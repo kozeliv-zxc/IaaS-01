@@ -7,6 +7,7 @@ ifdef $(dnf)
 	sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
 else
 	ifdef $(apt)
+		print debug
 		sudo apt install git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv -y
 	else
 		print "what the ...?"
