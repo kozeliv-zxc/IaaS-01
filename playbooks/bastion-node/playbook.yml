@@ -1,21 +1,5 @@
+- name: Install docker
+  ansible.builtin.import_playbook: docker.yml
+
 - name: Configuring globals.yml settings
-  hosts: localhost
-  remote_user: root
-  connection: local
-  vars:
-    network_interface: "ens18"
-    ansible_ssh_private_key_file: "/home/user0/.ssh/deploy-key"
-  tasks:
-    - name: Adjust kolla_base_distro
-      become: true
-      ansible.builtin.replace:
-        path: /etc/kolla/globals.yml
-        regexp: '#kolla_base_distro: "rocky"'
-        replace: 'kolla_base_distro: "debian"'
-        backup: true
-    - name: Replace network_interface
-      become: true
-      ansible.builtin.replace:
-        path: /etc/kolla/globals.yml
-        regexp: '#network_interface: "eth0"'
-        replace: 'network_interface: "ens18"'
+  ansible.builtin.import_playbook: setup-config-files.yml
