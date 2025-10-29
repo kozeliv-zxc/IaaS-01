@@ -3,7 +3,7 @@ os = $(shell uname -v)
 
 install-deps:
 	sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
-	sudo apt install git python3-dev libffi-dev gcc libssl-dev python3-venv -y
+	sudo apt install git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv -y
 
 init:
 	python3 -m venv /home/$(user)/deploy
