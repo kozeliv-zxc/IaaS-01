@@ -26,3 +26,6 @@
 
 - name: Configuring globals.yml settings
   ansible.builtin.import_playbook: setup-config-files.yml
+
+- name: AIO Deploy
+  ansible.builtin.import_playbook: aio-deploy.yml
