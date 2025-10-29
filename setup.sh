@@ -4,7 +4,7 @@ user = $(whoami)
 apt = $(which apt)
 dnf = $(which dnf)
 
-if [ $user != "root" ]
+if [ $user != "root" ]; then
     echo "must be root"
     exit 1
 
