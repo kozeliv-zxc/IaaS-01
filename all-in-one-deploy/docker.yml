@@ -4,15 +4,12 @@
   remote_user: root
   connection: local
   tasks:
-    - name: Debug
-      become: true
-      ansible.builtin.debug:
-        msg: "{{ ansible_distribution }}"
     - name: Add docker repo
       become: true
       ansible.builtin.command: dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
       register: output
       changed_when: output.rc == 0
+      when: ansible_facts['pkg_mgr'] == "dnf"
     - name: Install docker
       become: true
       ansible.builtin.command: dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
