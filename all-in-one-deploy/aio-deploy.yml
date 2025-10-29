@@ -6,16 +6,16 @@
   tasks:
     - name: Bootstrap server
       become: true
-      ansible.builtin.command: kolla-ansible bootstrap-servers -i ./all-in-one
+      ansible.builtin.command: kolla-ansible bootstrap-servers -i /etc/kolla/ansible/inventory/all-in-one
       register: output
       changed_when: output.rc == 0
     - name: Precheck
       become: true
-      ansible.builtin.command: kolla-ansible prechecks -i ./all-in-one
+      ansible.builtin.command: kolla-ansible prechecks -i /etc/kolla/ansible/inventory/all-in-one
       register: output
       changed_when: output.rc == 0
     - name: Deploy
       become: true
-      ansible.builtin.command: kolla-ansible -i deploy ./all-in-one
+      ansible.builtin.command: kolla-ansible -i deploy /etc/kolla/ansible/inventory/all-in-one
       register: output
       changed_when: output.rc == 0
