@@ -17,7 +17,7 @@ else
     echo "what the..."
 fi
 
-if [[ $user == "root" ]]; then
+if [ $user -eq "root" ]; then
     user_path="/root"
 else
     user_path="/home/$user"
