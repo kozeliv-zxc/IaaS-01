@@ -8,3 +8,4 @@
       become: true
       ansible.builtin.debug:
         msg: "{{ ansible_distribution }}"
+      when: ansible_facts['os_family'] == "Redhat"
