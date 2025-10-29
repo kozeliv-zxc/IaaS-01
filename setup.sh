@@ -12,7 +12,7 @@ fi
 if [ $dnf ]; then
     dnf install -y git python3-devel libffi-devel gcc openssl-devel python3-libselinux
 elif [ $apt ]; then
-    apt install -y git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv
+    apt install -y git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv pkg-config libdbus-glib-1-dev
 else
     echo "what the..."
 fi
@@ -27,7 +27,7 @@ python3 -m venv $user_path/deploy
 . $user_path/deploy/bin/activate
 python3 -m pip install -U pip
 python3 -m pip install 'ansible-core>=2.16,<2.17.99'
-python3 -m pip install docker
+python3 -m pip install docker dbus-python
 python3 -m pip install git+https://opendev.org/openstack/kolla-ansible@stable/2024.2
 mkdir -p /etc/kolla
 chown $user:$user /etc/kolla
