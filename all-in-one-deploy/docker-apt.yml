@@ -13,6 +13,6 @@
   changed_when: output.rc == 0
 - name: Install docker (apt)
   become: true
-  ansible.builtin.command: apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  ansible.builtin.command: apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   register: output
   changed_when: output.rc == 0
