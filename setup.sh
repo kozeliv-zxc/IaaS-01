@@ -4,20 +4,20 @@ user="$(whoami)"
 apt="$(which apt)"
 dnf="$(which dnf)"
 
-if [ $user != "root" ]; then
+if [[ $user != "root" ]]; then
     echo "must be root"
     exit 1
 fi
 
-if [ $apt ]; then
-    apt install git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv -y
-elif [ $dnf ]; then
-    dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
+if [ $dnf ]; then
+    dnf install -y git python3-devel libffi-devel gcc openssl-devel python3-libselinux
+elif [ $apt ]; then
+    apt install -y git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv
 else
     echo "what the..."
 fi
 
-if [ $user == "root" ]; then
+if [[ $user == "root" ]]; then
     user_path="/root"
 else
     user_path="/home/$user"
