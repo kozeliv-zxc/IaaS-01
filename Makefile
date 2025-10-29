@@ -1,9 +1,18 @@
 user = $(shell whoami)
 os = $(shell uname -v)
+apt = $(shell which apt)
+dnf = $(shell which dnf)
 
 install-deps:
-	sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
-	sudo apt install git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv -y
+	ifdef $(dnf)
+		sudo dnf install git python3-devel libffi-devel gcc openssl-devel python3-libselinux -y
+	else
+		ifdef $(apt)
+			sudo apt install git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv -y
+		else
+			print "what the ...?"
+		endif
+	endif
 
 init:
 	python3 -m venv /home/$(user)/deploy
