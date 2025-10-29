@@ -1,3 +1,5 @@
+#!/bin/sh
+
 user = $(whoami)
 apt = $(which apt)
 dnf = $(which dnf)
