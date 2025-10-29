@@ -29,7 +29,7 @@ python3 -m pip install -U pip
 python3 -m pip install 'ansible-core>=2.16,<2.17.99'
 python3 -m pip install git+https://opendev.org/openstack/kolla-ansible@stable/2024.2
 mkdir -p /etc/kolla
-chown $(user):$(user) /etc/kolla
+chown $user:$user /etc/kolla
 cp -r $user_path/deploy/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
 cp -r $user_path/deploy/share/kolla-ansible/ansible /etc/kolla
 kolla-ansible install-deps
