@@ -27,6 +27,7 @@ python3 -m venv $user_path/deploy
 . $user_path/deploy/bin/activate
 python3 -m pip install -U pip
 python3 -m pip install 'ansible-core>=2.16,<2.17.99'
+python3 -m pip install docker
 python3 -m pip install git+https://opendev.org/openstack/kolla-ansible@stable/2024.2
 mkdir -p /etc/kolla
 chown $user:$user /etc/kolla
