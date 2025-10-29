@@ -1,8 +1,8 @@
 #!/bin/sh
 
-user = $(whoami)
-apt = $(which apt)
-dnf = $(which dnf)
+user = "$(whoami)"
+apt = "$(which apt)"
+dnf = "$(which dnf)"
 
 if [ $user != "root" ]; then
     echo "must be root"
