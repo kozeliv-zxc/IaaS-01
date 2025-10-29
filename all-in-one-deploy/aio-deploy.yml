@@ -1,0 +1,11 @@
+# not finished
+- name: Configuring globals.yml settings
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Bootstrap server
+      become: true
+      ansible.builtin.command: kolla-ansible -i ./all-in-one bootstrap-servers
+      register: output
+      changed_when: output.rc == 0

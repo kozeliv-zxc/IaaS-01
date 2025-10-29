@@ -1,0 +1,5 @@
+- name: Install docker
+  ansible.builtin.import_playbook: docker.yml
+
+- name: Configuring globals.yml settings
+  ansible.builtin.import_playbook: setup-config-files.yml
