@@ -1,4 +1,3 @@
-SHELL := /bin/bash
 user = $(shell whoami)
 apt := $(shell which apt)
 dnf := $(shell which dnf)
