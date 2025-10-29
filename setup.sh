@@ -1,4 +1,4 @@
-user = $(shell whoami)
+user = $(whoami)
 apt = $(which apt)
 dnf = $(which dnf)
 
