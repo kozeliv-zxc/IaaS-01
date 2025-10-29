@@ -7,5 +7,5 @@
     - name: Debug
       become: true
       ansible.builtin.debug:
-        msg: "{{ ansible_distribution }} {{ os_family }}"
+        msg: "{{ ansible_distribution }} {{ ansible_facts }}"
 
