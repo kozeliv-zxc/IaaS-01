@@ -1,4 +1,5 @@
 - name: Configuring globals.yml settings
+  vars_files: vars/global-configuration
   hosts: localhost
   remote_user: root
   connection: local
@@ -23,8 +24,8 @@
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
-        regexp: '#network_interface: "eth1"'
-        replace: 'network_interface: "enp6s19"'
+        regexp: '#neutron_external_interface: "eth1"'
+        replace: 'neutron_external_interface: "enp6s19"'
     - name: Replace kolla_internal_vip_address
       become: true
       ansible.builtin.replace:
