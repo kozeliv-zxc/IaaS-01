@@ -1,11 +1,8 @@
 - name: Configuring globals.yml settings
-  vars_files: vars/global-configuration
+  vars_files: vars/global-vars.yml
   hosts: localhost
   remote_user: root
   connection: local
-  vars:
-    network_interface: "ens18"
-    ansible_ssh_private_key_file: "/home/user0/.ssh/deploy-key"
   tasks:
     - name: Adjust kolla_base_distro
       become: true
