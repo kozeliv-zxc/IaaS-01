@@ -16,6 +16,6 @@
       changed_when: output.rc == 0
     - name: Deploy
       become: true
-      ansible.builtin.command: kolla-ansible -i deploy /etc/kolla/ansible/inventory/all-in-one
+      ansible.builtin.command: kolla-ansible deploy -i /etc/kolla/ansible/inventory/all-in-one
       register: output
       changed_when: output.rc == 0
