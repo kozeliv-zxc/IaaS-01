@@ -1,0 +1,6 @@
+- name: Openstack Infrastructure Deployment
+  hosts: localhost
+  tasks:
+    - name: Test
+      ansible.builtin.debug:
+        msg: "ok"
