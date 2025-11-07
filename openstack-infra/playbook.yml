@@ -4,3 +4,73 @@
     - name: Test
       ansible.builtin.debug:
         msg: "ok"
+    - name: Create public1 network
+      openstack.cloud.network:
+        state: present
+        name: public1
+        provider_physical_network: physnet1
+        provider_network_type: flat
+        external: true
+    - name: Create public1 subnet
+      openstack.cloud.subnet:
+        state: present
+        name: public1-subnet
+        network: public1
+        ip_version: 4
+        enable_dhcp: false
+        cidr: 172.10.1.0/24
+        gateway_ip: 172.10.1.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
+        allocation_pool_start: 172.10.1.150
+        allocation_pool_end: 172.10.1.199
+    - name: Create private1 network
+      openstack.cloud.network:
+        state: present
+        name: private1
+    - name: Create private1 subnet
+      openstack.cloud.subnet:
+        state: present
+        name: private1-subnet
+        network: private1
+        ip_version: 4
+        enable_dhcp: true
+        cidr: 10.10.10.0/24
+        gateway_ip: 10.10.10.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
+    - name: Create router1
+      openstack.cloud.router:
+        state: present
+        name: router1
+        network: public1
+        interfaces:
+          - net: private1
+            subnet: private1-subnet
+    - name: Create cirros image
+      openstack.cloud.image:
+        state: present
+        name: cirros
+        container_format: bare
+        disk_format: qcow2
+        filename: cirros-0.6.2-x86_64-disk.img
+        properties:
+          os_type: linux
+    - name: Create tiny flavor
+      openstack.cloud.compute_flavor:
+        state: present
+        name: m1.tiny
+        ram: 512
+        vcpus: 1
+        disk: 1
+    - name: Add public key
+      openstack.cloud.keypair:
+        state: present
+        name: mykey
+        public_key_file: /root/.ssh/id_ed25519.pub
+    - name: Create instance
+      openstack.cloud.server:
+        state: present
+        name: vm1
+        image: cirros
+        flavor: m1.tiny
+        network: private1
+        key_name: mykey
