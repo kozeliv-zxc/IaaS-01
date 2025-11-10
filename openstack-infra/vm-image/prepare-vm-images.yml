@@ -1,0 +1,28 @@
+- name: Prepare VM Images
+  hosts: localhost
+  tasks:
+    - name: Create debian bookworm generic image
+      openstack.cloud.image:
+        state: present
+        name: debian-12-generic-amd64
+        container_format: bare
+        disk_format: qcow2
+        filename: debian-12-generic-amd64-20251006-2257.qcow2
+        properties:
+          os_type: linux
+          os_distro: debian
+          os_admin_user: debian
+          os_version: 10.9.1
+          hw_disk_bus: scsi
+          hw_scsi_model: virtio-scsi
+    - name: Create cirros image
+      openstack.cloud.image:
+        state: present
+        name: cirros
+        container_format: bare
+        disk_format: qcow2
+        filename: cirros-0.6.2-x86_64-disk.img
+        properties:
+          os_distro: cirros
+          os_type: linux
+          os_version: 0.6.2

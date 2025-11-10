@@ -1,0 +1,11 @@
+- name: Deploy DMZ hosts
+  hosts: localhost
+  tasks:
+    - name: Create instance
+      openstack.cloud.server:
+        state: present
+        name: DMZ-host
+        image: debian-12-generic-amd64
+        flavor: m1.tiny
+        network: dmz-net1
+        key_name: mykey

@@ -1,0 +1,10 @@
+- name: Configure VM Flavors
+  hosts: localhost
+  tasks:
+    - name: Create tiny flavor
+      openstack.cloud.compute_flavor:
+        state: present
+        name: m1.tiny
+        ram: 512
+        vcpus: 1
+        disk: 1

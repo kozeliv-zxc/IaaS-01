@@ -12,6 +12,6 @@
         network: corp-net
         ip_version: 4
         enable_dhcp: true
-        cidr: 172.20.1.0/24
+        cidr: 172.160.1.0/24
         gateway_ip: 172.20.1.1
         dns_nameservers: ['1.1.1.1', '1.0.0.1']

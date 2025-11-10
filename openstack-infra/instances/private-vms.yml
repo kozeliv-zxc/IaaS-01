@@ -1,0 +1,11 @@
+- name: Deploy private vms
+  hosts: localhost
+  tasks:
+    - name: Create instance
+      openstack.cloud.server:
+        state: present
+        name: vm1
+        image: cirros
+        flavor: m1.tiny
+        network: private1
+        key_name: mykey

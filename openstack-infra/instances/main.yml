@@ -1,0 +1,12 @@
+- name: Instance deployment
+  hosts: localhost
+  tasks:
+    - name: Test
+      ansible.builtin.debug:
+        msg: "instance"
+
+- name: Configure DMZ host
+  ansible.builtin.import_playbook: dmz-host.yml
+
+- name: Configure private vms
+  ansible.builtin.import_playbook: private-vms.yml

@@ -1,0 +1,8 @@
+- name: Configure authenticate identity
+  hosts: localhost
+  tasks:
+    - name: Add public key
+      openstack.cloud.keypair:
+        state: present
+        name: mykey
+        public_key_file: /root/.ssh/id_ed25519.pub

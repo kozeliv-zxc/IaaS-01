@@ -1,0 +1,26 @@
+- name: Configure DMZ network
+  hosts: localhost
+  tasks:
+    - name: Create DMZ network
+      openstack.cloud.network:
+        state: present
+        name: dmz-net1
+    - name: Create DMZ subnet
+      openstack.cloud.subnet:
+        state: present
+        name: dmz-subnet1
+        network: dmz-net1
+        ip_version: 4
+        enable_dhcp: false
+        cidr: 70.70.70.0/24
+        gateway_ip: 70.70.70.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
+    - name: Create public-router1
+      openstack.cloud.router:
+        state: present
+        name: public-router1
+        network: public1
+        interfaces:
+          - net: dmz-net1
+            subnet: dmz-subnet1
+            portip: 70.70.70.1

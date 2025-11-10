@@ -1,0 +1,15 @@
+- name: Network deployment
+  hosts: localhost
+  tasks:
+    - name: Test
+      ansible.builtin.debug:
+        msg: "network"
+
+- name: Configure public networks
+  ansible.builtin.import_playbook: public-network.yml
+
+- name: Configure DMZ networks
+  ansible.builtin.import_playbook: dmz-network.yml
+
+- name: Configure private networks
+  ansible.builtin.import_playbook: private-network.yml

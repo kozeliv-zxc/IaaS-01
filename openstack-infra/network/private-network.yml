@@ -4,14 +4,24 @@
     - name: Create private1 network
       openstack.cloud.network:
         state: present
-        name: private1
+        name: private-net1
     - name: Create private1 subnet
       openstack.cloud.subnet:
         state: present
-        name: private1-subnet
-        network: private1
+        name: private-subnet1
+        network: private-net1
         ip_version: 4
         enable_dhcp: true
         cidr: 10.10.10.0/24
         gateway_ip: 10.10.10.1
         dns_nameservers: ['1.1.1.1', '1.0.0.1']
+    - name: Create dmz-router1
+      openstack.cloud.router:
+        state: present
+        name: dmz-router1
+        interfaces:
+          - net: dmz-net1
+            subnet: dmz-subnet1
+            portip: 70.70.70.2
+          - net: private-net1
+            subnet: private-subnet1

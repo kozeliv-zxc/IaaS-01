@@ -4,40 +4,18 @@
     - name: Test
       ansible.builtin.debug:
         msg: "ok"
-    - name: Create router1
-      openstack.cloud.router:
-        state: present
-        name: router1
-        network: public1
-        interfaces:
-          - net: private1
-            subnet: private1-subnet
-    - name: Create cirros image
-      openstack.cloud.image:
-        state: present
-        name: cirros
-        container_format: bare
-        disk_format: qcow2
-        filename: cirros-0.6.2-x86_64-disk.img
-        properties:
-          os_type: linux
-    - name: Create tiny flavor
-      openstack.cloud.compute_flavor:
-        state: present
-        name: m1.tiny
-        ram: 512
-        vcpus: 1
-        disk: 1
-    - name: Add public key
-      openstack.cloud.keypair:
-        state: present
-        name: mykey
-        public_key_file: /root/.ssh/id_ed25519.pub
-    - name: Create instance
-      openstack.cloud.server:
-        state: present
-        name: vm1
-        image: cirros
-        flavor: m1.tiny
-        network: private1
-        key_name: mykey
+
+- name: Z-auth
+  ansible.builtin.import_playbook: ./auth/configure-identity.yml
+
+- name: Z-flavor
+  ansible.builtin.import_playbook: ./flavor/configure-vm-flavors.yml
+
+- name: S-vm-image
+  ansible.builtin.import_playbook: ./vm-image/prepare-vm-images.yml
+
+- name: S-network
+  ansible.builtin.import_playbook: ./network/main.yml
+
+- name: S-instance
+  ansible.builtin.import_playbook: ./instances/main.yml
