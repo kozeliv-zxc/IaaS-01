@@ -1,0 +1,22 @@
+- name: Configure public network
+  hosts: localhost
+  tasks:
+    - name: Create public1 network
+      openstack.cloud.network:
+        state: present
+        name: public1
+        provider_physical_network: physnet1
+        provider_network_type: flat
+        external: true
+    - name: Create public1 subnet
+      openstack.cloud.subnet:
+        state: present
+        name: public1-subnet
+        network: public1
+        ip_version: 4
+        enable_dhcp: false
+        cidr: 172.10.1.0/24
+        gateway_ip: 172.10.1.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
+        allocation_pool_start: 172.10.1.150
+        allocation_pool_end: 172.10.1.199

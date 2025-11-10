@@ -1,0 +1,17 @@
+- name: Configure private network
+  hosts: localhost
+  tasks:
+    - name: Create private1 network
+      openstack.cloud.network:
+        state: present
+        name: private1
+    - name: Create private1 subnet
+      openstack.cloud.subnet:
+        state: present
+        name: private1-subnet
+        network: private1
+        ip_version: 4
+        enable_dhcp: true
+        cidr: 10.10.10.0/24
+        gateway_ip: 10.10.10.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']

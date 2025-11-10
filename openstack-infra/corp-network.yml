@@ -1,0 +1,17 @@
+- name: Configure corporation network
+  hosts: localhost
+  tasks:
+    - name: Create corporation network
+      openstack.cloud.network:
+        state: present
+        name: corp-net
+    - name: Create corporation subnet
+      openstack.cloud.subnet:
+        state: present
+        name: corp-subnet
+        network: corp-net
+        ip_version: 4
+        enable_dhcp: true
+        cidr: 172.20.1.0/24
+        gateway_ip: 172.20.1.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
