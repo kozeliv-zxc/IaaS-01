@@ -7,5 +7,5 @@
         name: vm1
         image: cirros
         flavor: m1.tiny
-        network: private1
+        network: private-net1
         key_name: mykey
