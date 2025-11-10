@@ -9,3 +9,4 @@
         flavor: m1.small
         network: dmz-net1
         key_name: mykey
+        auto_floating_ip: true
