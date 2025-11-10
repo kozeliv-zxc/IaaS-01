@@ -8,3 +8,10 @@
         ram: 512
         vcpus: 1
         disk: 1
+    - name: Create small flavor
+      openstack.cloud.compute_flavor:
+        state: present
+        name: m1.small
+        ram: 512
+        vcpus: 1
+        disk: 5
