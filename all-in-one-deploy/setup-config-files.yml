@@ -10,7 +10,6 @@
         path: /etc/kolla/globals.yml
         regexp: '#kolla_base_distro: "rocky"'
         replace: 'kolla_base_distro: "{{ kolla_base_distro }}"'
-        backup: true
     - name: Replace network_interface
       become: true
       ansible.builtin.replace:
@@ -29,3 +28,33 @@
         path: /etc/kolla/globals.yml
         regexp: '#kolla_internal_vip_address: "10.10.10.254"'
         replace: 'kolla_internal_vip_address: "{{ kolla_internal_vip_address }}"'
+    - name: Enable Cinder 1.0
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_cinder: "no"'
+        replace: 'enable_cinder: yes"'
+    - name: Enable Cinder 1.1
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: 'enable_cinder_backend_lvm: "no"'
+        replace: 'enable_cinder_backend_lvm: yes'
+    - name: Enable Cinder 1.2
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_cinder_backend_iscsi: "\{\{ enable_cinder_backend_lvm | bool }}"'
+        replace: 'enable_cinder_backend_iscsi: "\{\{ enable_cinder_backend_lvm | bool }}"'
+    - name: Enable Cinder 1.3
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_iscsid: "\{\{ enable_cinder | bool and enable_cinder_backend_iscsi | bool }}"'
+        replace: 'enable_iscsid: "\{\{ enable_cinder | bool and enable_cinder_backend_iscsi | bool }}"'
+    - name: Enable Cinder 1.4
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#cinder_volume_group: "cinder-volumes"'
+        replace: 'cinder_volume_group: "cinder-volumes"'

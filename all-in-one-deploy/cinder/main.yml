@@ -1,0 +1,21 @@
+- name: Cinder volume setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Install dependencies
+      become: true
+      ansible.builtin.command: apt -y install lvm2
+      register: output
+      changed_when: output.rc == 0
+    - name: Initialize physical volume
+      become: true
+      ansible.builtin.command: pvcreate {{ device }}
+      register: output
+      changed_when: output.rc == 0
+    - name: Create volume group
+      become: true
+      ansible.builtin.command: vgcreate {{ volume_group_name }} {{ device }}
+      register: output
+      changed_when: output.rc == 0
