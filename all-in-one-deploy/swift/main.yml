@@ -15,6 +15,7 @@
         index=0
         for d in {{ swift_device }}; do
           parted /dev/${d} -s -- mklabel gpt mkpart {{ swift_device_name }} 1 -1
+          sleep 1
           mkfs.xfs -f -L d${index} /dev/${d}1
           (( index++ ))
         done
