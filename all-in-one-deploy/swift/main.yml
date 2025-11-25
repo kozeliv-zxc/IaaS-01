@@ -19,7 +19,7 @@
           mkfs.xfs -f -L d${index} /dev/${d}1
           (( index++ ))
         done
-        return 0
+        echo "ok"
       args:
         executable: /bin/bash
       register: output
