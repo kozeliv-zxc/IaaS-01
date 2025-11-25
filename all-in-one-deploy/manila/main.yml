@@ -1,0 +1,13 @@
+- name: Manila setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Manila
+      become: true
+      ansible.builtin.debug:
+        msg: "manila"
+
+- name: Enable Manila module
+  ansible.builtin.import_playbook: setup-config-files.yml

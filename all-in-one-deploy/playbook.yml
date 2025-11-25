@@ -36,5 +36,8 @@
 - name: Enable Swift
   ansible.builtin.import_playbook: swift/main.yml
 
+- name: Enable Manila
+  ansible.builtin.import_playbook: manila/main.yml
+
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml
