@@ -6,7 +6,7 @@
   tasks:
     - name: Install dependencies
       become: true
-      ansible.builtin.command: apt -y install xfsprogs
+      ansible.builtin.command: apt -y install xfsprogs parted
       register: output
       changed_when: output.rc == 0
     - name: Create disk partition table
