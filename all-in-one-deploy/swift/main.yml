@@ -19,6 +19,8 @@
           mkfs.xfs -f -L d${index} /dev/${d}1
           (( index++ ))
         done
+      args:
+        executable: /bin/bash
       register: output
       changed_when: output.rc == 0
     - name: Create Swift config folder
@@ -52,6 +54,8 @@
               /etc/kolla/config/swift/object.builder add r1z1-${node}:6000/d${i} 1;
           done
         done
+      args:
+        executable: /bin/bash
       register: output
       changed_when: output.rc == 0
     - name: Generate account ring 1.0
@@ -80,6 +84,8 @@
               /etc/kolla/config/swift/account.builder add r1z1-${node}:6001/d${i} 1;
           done
         done
+      args:
+        executable: /bin/bash
       register: output
       changed_when: output.rc == 0
     - name: Generate container ring 1.0
@@ -108,6 +114,8 @@
               /etc/kolla/config/swift/container.builder add r1z1-${node}:6002/d${i} 1;
           done
         done
+      args:
+        executable: /bin/bash
       register: output
       changed_when: output.rc == 0
     - name: Rebalance ring files
