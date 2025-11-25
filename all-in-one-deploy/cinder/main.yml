@@ -11,7 +11,7 @@
       changed_when: output.rc == 0
     - name: Initialize physical volume
       become: true
-      ansible.builtin.command: pvcreate -ff {{ device }}
+      ansible.builtin.command: pvcreate -ffy {{ device }}
       register: output
       changed_when: output.rc == 0
     - name: Create volume group
