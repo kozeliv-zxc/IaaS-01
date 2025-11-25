@@ -45,7 +45,7 @@
       ansible.builtin.shell: |
         STORAGE_NODES={{ storage_nodes }}
         declare -i REPLICA_CNT={{ replicas }}-1
-        for node in ${STORAGE_NODES}[@]}; do
+        for node in ${STORAGE_NODES[@]}; do
           for i in $(seq 0 $REPLICA_CNT); do
             docker run \
             --rm \
