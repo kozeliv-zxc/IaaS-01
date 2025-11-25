@@ -30,5 +30,11 @@
 - name: Configuring globals.yml settings
   ansible.builtin.import_playbook: setup-config-files.yml
 
+- name: Enable Cinder
+  ansible.builtin.import_playbook: cinder/main.yml
+
+- name: Enable Swift
+  ansible.builtin.import_playbook: swift/main.yml
+
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml

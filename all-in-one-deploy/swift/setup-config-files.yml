@@ -1,16 +1,16 @@
-- name: Configuring Swift module settings
+- name: Configuring Swift service settings
   vars_files: vars.yml
   hosts: localhost
   remote_user: root
   connection: local
   tasks:
-    - name: Enable swift 1.1
+    - name: Enable swift 1.0
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
         regexp: '#enable_swift: "no"'
         replace: 'enable_swift: "yes"'
-    - name: Enable swift 1.2
+    - name: Enable swift 1.1
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml

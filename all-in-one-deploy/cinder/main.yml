@@ -19,3 +19,6 @@
       ansible.builtin.command: vgcreate {{ volume_group_name }} {{ device }}
       register: output
       changed_when: output.rc == 0
+
+- name: Enable Cinder service
+  ansible.builtin.import_playbook: setup-config-files.yml

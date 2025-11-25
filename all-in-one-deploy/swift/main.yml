@@ -20,7 +20,7 @@
       ansible.builtin.command: mkdir -p /etc/kolla/config/swift
       register: output
       changed_when: output.rc == 0
-    - name: Generate object ring 1.1
+    - name: Generate object ring 1.0
       become: true
       ansible.builtin.shell: |
         docker run \
@@ -31,7 +31,7 @@
         /etc/kolla/config/swift/object.builder create 10 {{ replicas }} 1
       register: output
       changed_when: output.rc == 0
-    - name: Generate object ring 1.2
+    - name: Generate object ring 1.1
       become: true
       ansible.builtin.shell: |
         STORAGE_NODES={{ storage_node }}
@@ -48,7 +48,7 @@
         done
       register: output
       changed_when: output.rc == 0
-    - name: Generate account ring 1.1
+    - name: Generate account ring 1.0
       become: true
       ansible.builtin.shell: |
         docker run \
@@ -59,7 +59,7 @@
         /etc/kolla/config/swift/account.builder create 10 {{ replicas }} 1
       register: output
       changed_when: output.rc == 0
-    - name: Generate account ring 1.2
+    - name: Generate account ring 1.1
       become: true
       ansible.builtin.shell: |
         STORAGE_NODES={{ storage_node }}
@@ -76,7 +76,7 @@
         done
       register: output
       changed_when: output.rc == 0
-    - name: Generate container ring 1.1
+    - name: Generate container ring 1.0
       become: true
       ansible.builtin.shell: |
         docker run \
@@ -87,7 +87,7 @@
         /etc/kolla/config/swift/container.builder create 10 {{ replicas }} 1
       register: output
       changed_when: output.rc == 0
-    - name: Generate container ring 1.2
+    - name: Generate container ring 1.1
       become: true
       ansible.builtin.shell: |
         STORAGE_NODES={{ storage_node }}
