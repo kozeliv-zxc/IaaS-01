@@ -43,7 +43,7 @@
     - name: Generate object ring 1.1
       become: true
       ansible.builtin.shell: |
-        STORAGE_NODES={{ storage_node }}
+        STORAGE_NODES={{ storage_nodes }}
         declare -i REPLICA_CNT={{ replicas }}-1
         for node in ${STORAGE_NODES}[@]}; do
           for i in $(seq 0 $REPLICA_CNT); do
@@ -73,7 +73,7 @@
     - name: Generate account ring 1.1
       become: true
       ansible.builtin.shell: |
-        STORAGE_NODES={{ storage_node }}
+        STORAGE_NODES={{ storage_nodes }}
         declare -i REPLICA_CNT={{ replicas }}-1
         for node in ${STORAGE_NODES[@]}; do
           for i in $(seq 0 $REPLICA_CNT); do
@@ -103,7 +103,7 @@
     - name: Generate container ring 1.1
       become: true
       ansible.builtin.shell: |
-        STORAGE_NODES={{ storage_node }}
+        STORAGE_NODES={{ storage_nodes }}
         declare -i REPLICA_CNT={{ replicas }}-1
         for node in ${STORAGE_NODES[@]}; do
           for i in $(seq 0 $REPLICA_CNT); do
