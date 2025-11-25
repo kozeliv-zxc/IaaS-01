@@ -1,0 +1,5 @@
+swift_device: "sdc"
+swift_device_name: "KOLLA_SWIFT_DATA"
+kolla_swift_base_image: "kolla/debian-source-swift-base:11.2.1"
+storage_nodes: "(172.25.4.89)"
+replicas: 1

@@ -1,0 +1,18 @@
+- name: Configuring Swift module settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Enable swift 1.1
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_swift: "no"'
+        replace: 'enable_swift: "yes"'
+    - name: Enable swift 1.2
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#swift_devices_name: "KOLLA_SWIFT_DATA"'
+        replace: 'swift_devices_name: "{{ swift_device_name }}"'

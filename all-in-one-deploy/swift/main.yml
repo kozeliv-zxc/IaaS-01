@@ -1,0 +1,122 @@
+- name: Swift volume setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Create disk partition table
+      become: true
+      ansible.builtin.shell: |
+        index=0
+        for d in {{ swift_device }}; do
+          parted /dev/${d} -s -- mklabel gpt mkpart {{ swift_device_name }} 1 -1
+          sudo mkfs.xfs -f -L d${index} /dev/${d}1
+          (( index++ ))
+        done
+      register: output
+      changed_when: output.rc == 0
+    - name: Create Swift config folder
+      become: true
+      ansible.builtin.command: mkdir -p /etc/kolla/config/swift
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate object ring 1.1
+      become: true
+      ansible.builtin.shell: |
+        docker run \
+        --rm \
+        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+        {{ kolla_swift_base_image }} \
+        swift-ring-builder \
+        /etc/kolla/config/swift/object.builder create 10 {{ replicas }} 1
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate object ring 1.2
+      become: true
+      ansible.builtin.shell: |
+        STORAGE_NODES={{ storage_node }}
+        declare -i REPLICA_CNT={{ replicas }}-1
+        for node in ${STORAGE_NODES}[@]}; do
+          for i in $(seq 0 $REPLICA_CNT); do
+            docker run \
+            --rm \
+            -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+            {{ kolla_swift_base_image }} \
+            swift-ring-builder \
+              /etc/kolla/config/swift/object.builder add r1z1-${node}:6000/d${i} 1;
+          done
+        done
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate account ring 1.1
+      become: true
+      ansible.builtin.shell: |
+        docker run \
+        --rm \
+        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+        {{ kolla_swift_base_image }} \
+        swift-ring-builder \
+        /etc/kolla/config/swift/account.builder create 10 {{ replicas }} 1
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate account ring 1.2
+      become: true
+      ansible.builtin.shell: |
+        STORAGE_NODES={{ storage_node }}
+        declare -i REPLICA_CNT={{ replicas }}-1
+        for node in ${STORAGE_NODES[@]}; do
+          for i in $(seq 0 $REPLICA_CNT); do
+            docker run \
+              --rm \
+              -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+              {{ kolla_swift_base_image }} \
+              swift-ring-builder \
+              /etc/kolla/config/swift/account.builder add r1z1-${node}:6001/d${i} 1;
+          done
+        done
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate container ring 1.1
+      become: true
+      ansible.builtin.shell: |
+        docker run \
+        --rm \
+        -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+        {{ kolla_swift_base_image }} \
+        swift-ring-builder \
+        /etc/kolla/config/swift/container.builder create 10 {{ replicas }} 1
+      register: output
+      changed_when: output.rc == 0
+    - name: Generate container ring 1.2
+      become: true
+      ansible.builtin.shell: |
+        STORAGE_NODES={{ storage_node }}
+        declare -i REPLICA_CNT={{ replicas }}-1
+        for node in ${STORAGE_NODES[@]}; do
+          for i in $(seq 0 $REPLICA_CNT); do
+            docker run \
+              --rm \
+              -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+              {{ kolla_swift_base_image }} \
+              swift-ring-builder \
+              /etc/kolla/config/swift/container.builder add r1z1-${node}:6002/d${i} 1;
+          done
+        done
+      register: output
+      changed_when: output.rc == 0
+    - name: Rebalance ring files
+      become: true
+      ansible.builtin.shell: |
+        for ring in object account container; do
+          docker run \
+            --rm \
+            -v /etc/kolla/config/swift/:/etc/kolla/config/swift/ \
+            {{ kolla_swift_base_image }} \
+            swift-ring-builder \
+            /etc/kolla/config/swift/${ring}.builder rebalance;
+        done
+      register: output
+      changed_when: output.rc == 0
+
+- name: Enable Swift module
+  ansible.builtin.import_playbook: setup-config-files.yml
