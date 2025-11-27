@@ -26,16 +26,11 @@
         path: manila.conf
         regexp: 'lvm_share_volume_group = manila-volumes'
         replace: 'lvm_share_volume_group = {{ volume_group_name }}'
-    - name: Create Manila config folder
-      become: true
-      ansible.builtin.command: mkdir -p /etc/kolla/config/manila
-      register: output
-      changed_when: output.rc == 0
     - name: Copy over Manila config file
       become: true
       ansible.builtin.copy:
         src: manila.conf
-        dest: /etc/kolla/config/manila/manila.conf
+        dest: /etc/kolla/config/manila.conf
         mode: '0644'
 
 - name: Enable Manila module
