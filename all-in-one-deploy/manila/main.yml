@@ -4,10 +4,39 @@
   remote_user: root
   connection: local
   tasks:
-    - name: Manila
+    - name: Initialize physical volume
       become: true
-      ansible.builtin.debug:
-        msg: "manila"
+      ansible.builtin.command: pvcreate -ffy {{ device }}
+      register: output
+      changed_when: output.rc == 0
+    - name: Create volume group
+      become: true
+      ansible.builtin.command: vgcreate {{ volume_group_name }} {{ device }}
+      register: output
+      changed_when: output.rc == 0
+    - name: Config storage node ip 1.0
+      become: true
+      ansible.builtin.replace:
+        path: manila.conf
+        regexp: 'lvm_share_export_ips = STORAGE_NODES_IP_LIST'
+        replace: 'lvm_share_export_ips = {{ storage_nodes_ip_list }}'
+    - name: Config storage node ip 1.1
+      become: true
+      ansible.builtin.replace:
+        path: manila.conf
+        regexp: 'lvm_share_volume_group = manila-volumes'
+        replace: 'lvm_share_volume_group = {{ volume_group_name }}'
+    - name: Create Manila config folder
+      become: true
+      ansible.builtin.command: mkdir -p /etc/kolla/config/manila
+      register: output
+      changed_when: output.rc == 0
+    - name: Copy over Manila config file
+      become: true
+      ansible.builtin.copy:
+        src: manila.conf
+        dest: /etc/kolla/config/manila/manila.conf
+        mode: '0644'
 
 - name: Enable Manila module
   ansible.builtin.import_playbook: setup-config-files.yml
