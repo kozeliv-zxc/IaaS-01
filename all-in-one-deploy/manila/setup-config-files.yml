@@ -12,7 +12,7 @@
         replace: 'enable_manila: "yes"'
     - name: Check Manila backend type
       become: true
-      ansible.builtin.shell: awk '/share_backend_name/{print $3}' manila/manila.conf
+      ansible.builtin.shell: awk '/enabled_share_backends/{print $3}' manila/manila.conf
       register: output
       changed_when: output.rc == 0
     - name: Enable manila 1.1
@@ -21,4 +21,4 @@
         path: /etc/kolla/globals.yml
         regexp: '#enable_manila_backend_generic: "no"'
         replace: 'enable_manila_backend_generic: "yes"'
-      when: output.stdout_lines == 'LVM'
+      when: output.stdout_lines[0] == 'lvm'
