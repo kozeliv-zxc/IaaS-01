@@ -1,0 +1,12 @@
+- name: Configuring Magnum service settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Enable Magnum 1.0
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_magnum: "no"'
+        replace: 'enable_magnum: "yes"'

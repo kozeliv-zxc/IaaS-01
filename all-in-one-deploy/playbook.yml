@@ -39,5 +39,8 @@
 - name: Enable Manila
   ansible.builtin.import_playbook: manila/main.yml
 
+- name: Enable Magnum
+  ansible.builtin.import_playbook: magnum/main.yml
+
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml

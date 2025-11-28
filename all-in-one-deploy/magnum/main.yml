@@ -1,0 +1,12 @@
+- name: Magnum setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Magnum
+      ansible.builtin.debug:
+        msg: "magnum"
+
+- name: Enable Magnum service
+  ansible.builtin.import_playbook: setup-config-files.yml
