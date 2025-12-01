@@ -44,3 +44,6 @@
 
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml
+
+- name: Post deploy
+  ansible.builtin.import_playbook: post-deploy.yml
