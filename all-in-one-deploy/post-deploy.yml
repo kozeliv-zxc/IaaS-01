@@ -18,6 +18,11 @@
       ansible.builtin.command: pip install python-magnumclient -c https://releases.openstack.org/constraints/upper/2024.2
       register: output
       changed_when: output.rc == 0
+    - name: Install octavia client
+      become: true
+      ansible.builtin.command: pip install python-octaviaclient -c https://releases.openstack.org/constraints/upper/2024.2
+      register: output
+      changed_when: output.rc == 0
     - name: Post deployment auth generation
       become: true
       ansible.builtin.command: kolla-ansible post-deploy
