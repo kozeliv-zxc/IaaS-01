@@ -1,0 +1,12 @@
+- name: Configuring Octavia service settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Enable Octavia 1.0
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_octavia: "no"'
+        replace: 'enable_octavia: "yes"'

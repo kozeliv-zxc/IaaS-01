@@ -1,0 +1,12 @@
+- name: Octavia setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Octavia
+      ansible.builtin.debug:
+        msg: "octavia"
+
+- name: Enable Octavia service
+  ansible.builtin.import_playbook: setup-config-files.yml
