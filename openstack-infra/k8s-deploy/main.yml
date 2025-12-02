@@ -1,0 +1,9 @@
+- name: K8s deployment
+  hosts: localhost
+  tasks:
+    - name: Deploy
+      ansible.builtin.debug:
+        msg: "deploy"
+
+- name: Prepare required images
+  ansible.builtin.import_playbook: k8s-image.yml
