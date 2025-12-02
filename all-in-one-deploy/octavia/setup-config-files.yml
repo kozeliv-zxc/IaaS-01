@@ -10,3 +10,9 @@
         path: /etc/kolla/globals.yml
         regexp: '#enable_octavia: "no"'
         replace: 'enable_octavia: "yes"'
+    - name: Enable redis for Octavia Jobboard
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_redis: "no"'
+        replace: 'enable_redis: "yes"'
