@@ -42,6 +42,9 @@
 - name: Enable Magnum
   ansible.builtin.import_playbook: magnum/main.yml
 
+- name: Enable Octavia
+  ansible.builtin.import_playbook: octavia/main.yml
+
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml
 
