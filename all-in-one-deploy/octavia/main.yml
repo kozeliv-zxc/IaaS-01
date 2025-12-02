@@ -4,6 +4,10 @@
   remote_user: root
   connection: local
   tasks:
+    - name: Generate CA cert for Octavia deployment
+      ansible.builtin.command: kolla-ansible octavia-certificates
+      register: output
+      changed_when: output.rc == 0
     - name: Octavia
       ansible.builtin.debug:
         msg: "octavia"
