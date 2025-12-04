@@ -17,5 +17,8 @@
 - name: S-network
   ansible.builtin.import_playbook: ./network/main.yml
 
+- name: S-kubernetes
+  ansible.builtin.import_playbook: ./k8s-deploy/main.yml
+
 - name: S-instance
   ansible.builtin.import_playbook: ./instances/main.yml
