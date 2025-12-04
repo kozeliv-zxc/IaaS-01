@@ -10,3 +10,14 @@
       ansible.builtin.command: tar -xf /tmp/openstack-amd64.raw.xz
       register: output
       changed_when: output.rc == 0
+    - name: Create Talos Linux image
+      openstack.cloud.image:
+        state: present
+        name: Talos Linux v1.11.5
+        container_format: bare
+        disk_format: raw
+        filename: /tmp/openstack-amd64.raw
+        properties:
+          os_type: linux
+          os_distro: talos
+          os_version: 1.11.5
