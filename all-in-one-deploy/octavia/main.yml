@@ -14,6 +14,7 @@
       ansible.builtin.git:
         repo: https://opendev.org/openstack/octavia
         version: 'stable/2024.2'
+        dest: octavia
     - name: Build Amphora image 1.1
       become: true
       ansible.builtin.shell:
