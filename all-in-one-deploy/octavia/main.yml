@@ -29,7 +29,6 @@
       changed_when: output.rc == 0
     - name: Build Amphora image 1.2
       ansible.builtin.copy:
-        ansible.builtin.copy:
         src: octavia/diskimage-create/amphora-x64-haproxy.qcow2
         dest: /tmp/amphora-x64-haproxy.qcow2
         mode: '0644'
