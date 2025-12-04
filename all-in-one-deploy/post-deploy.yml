@@ -3,6 +3,10 @@
   remote_user: root
   connection: local
   tasks:
+    - name: Install openstack.cloud collection
+      ansible.builtin.command: ansible-galaxy collection install openstack.cloud
+      register: output
+      changed_when: output.rc == 0
     - name: Install openstack client
       become: true
       ansible.builtin.command: pip install python-openstackclient -c https://releases.openstack.org/constraints/upper/2024.2
