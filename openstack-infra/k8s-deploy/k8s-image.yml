@@ -7,7 +7,7 @@
         dest: /tmp/openstack-amd64.raw.xz
         mode: 644
     - name: Untar Talos Linux image file
-      ansible.builtin.command: tar -xf /tmp/openstack-amd64.raw.xz
+      ansible.builtin.command: xz -d /tmp/openstack-amd64.raw.xz
       register: output
       changed_when: output.rc == 0
     - name: Create Talos Linux image
