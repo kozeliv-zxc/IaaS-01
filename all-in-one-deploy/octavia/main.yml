@@ -4,6 +4,36 @@
   remote_user: root
   connection: local
   tasks:
+    - name: Install dependencies
+      become: true
+      ansible.builtin.command: apt -y install debootstrap qemu-utils git kpartx
+      register: output
+      changed_when: output.rc == 0
+    - name: Build Amphora image 1.0
+      become: true
+      ansible.builtin.git:
+        repo: https://opendev.org/openstack/octavia
+        version: 'stable/2024.2'
+      register: output
+      changed_when: output.rc == 0
+    - name: Build Amphora image 1.1
+      become: true
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          python3 -m venv dib-venv
+          source dib-venv/bin/activate
+          pip install diskimage-builder
+          cd octavia/diskimage-create
+          ./diskimage-create.sh
+      register: output
+      changed_when: output.rc == 0
+    - name: Build Amphora image 1.2
+      ansible.builtin.copy:
+        ansible.builtin.copy:
+        src: octavia/diskimage-create/amphora-x64-haproxy.qcow2
+        dest: /tmp/amphora-x64-haproxy.qcow2
+        mode: '0644'
     - name: Generate CA cert for Octavia deployment
       ansible.builtin.command: kolla-ansible octavia-certificates
       register: output

@@ -32,3 +32,18 @@
       ansible.builtin.command: kolla-ansible post-deploy
       register: output
       changed_when: output.rc == 0
+    - name: Amphora image creation
+      become: true
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          source /etc/kolla/octavia-openrc.sh
+          openstack image create amphora-x64-haproxy.qcow2 \
+          --container-format bare --disk-format qcow2 \
+          --private \
+          --tag amphora \
+          --file /tmp/amphora-x64-haproxy.qcow2 \
+          --property hw_architecture='x86_64' \
+          --property hw_rng_model=virtio
+      register: output
+      changed_when: output.rc == 0
