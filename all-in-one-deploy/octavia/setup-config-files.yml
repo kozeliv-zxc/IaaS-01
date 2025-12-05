@@ -16,3 +16,34 @@
         path: /etc/kolla/globals.yml
         regexp: '#enable_redis: "no"'
         replace: 'enable_redis: "yes"'
+    - name: Define octavia amphora flavor
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '(?s)^#octavia_amp_flavor:.*?^#\s*disk:.*$'
+        replace: |
+          octavia_amp_flavor:
+            name: "amphora"
+            is_public: no
+            vcpus: 1
+            ram: 1024
+            disk: 5
+    - name: Define octavia amphora network
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '(?s)^#octavia_amp_network:.*?^#\s*enable_dhcp:.*$'
+        replace: |
+          octavia_amp_network:
+            name: lb-mgmt-net
+            provider_network_type: vxlan
+            provider_physical_network: physnet1
+            external: false
+            shared: false
+            subnet:
+              name: lb-mgmt-subnet
+              cidr: "10.1.2.0/24"
+              allocation_pool_start: "10.1.2.100"
+              allocation_pool_end: "10.1.2.200"
+              gateway_ip: "10.1.2.1"
+              enable_dhcp: yes
