@@ -4,12 +4,12 @@
     - name: Download cirros image
       ansible.builtin.get_url:
         url: https://github.com/cirros-dev/cirros/releases/download/0.6.2/cirros-0.6.2-x86_64-disk.img
-        dest: /tmp/cirros-0.6.2-x86_64-disk.img
+        dest: /cirros-0.6.2-x86_64-disk.img
         mode: 644
     - name: Download debian image
       ansible.builtin.get_url:
         url: https://cdimage.debian.org/images/cloud/bookworm/20251006-2257/debian-12-generic-amd64-20251006-2257.qcow2
-        dest: /tmp/debian-12-generic-amd64-20251006-2257.qcow2
+        dest: /debian-12-generic-amd64-20251006-2257.qcow2
         mode: 644
     - name: Create debian bookworm generic image
       openstack.cloud.image:
@@ -17,7 +17,7 @@
         name: debian-12-generic-amd64
         container_format: bare
         disk_format: qcow2
-        filename: /tmp/debian-12-generic-amd64-20251006-2257.qcow2
+        filename: /debian-12-generic-amd64-20251006-2257.qcow2
         properties:
           os_type: linux
           os_distro: debian
@@ -31,7 +31,7 @@
         name: cirros
         container_format: bare
         disk_format: qcow2
-        filename: /tmp/cirros-0.6.2-x86_64-disk.img
+        filename: /cirros-0.6.2-x86_64-disk.img
         properties:
           os_distro: cirros
           os_type: linux
