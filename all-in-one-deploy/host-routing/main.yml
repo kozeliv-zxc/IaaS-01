@@ -18,7 +18,7 @@
         mode: '0644'
     - name: Enable setup-brs.service
       become: true
-      ansible.builtin.command: |
+      ansible.builtin.shell: |
         systemctl enable setup-brs.service
         systemctl start setup-brs.service
       register: output
