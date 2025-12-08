@@ -42,7 +42,7 @@
           --container-format bare --disk-format qcow2 \
           --private \
           --tag amphora \
-          --file /tmp/amphora-x64-haproxy.qcow2 \
+          --file /amphora-x64-haproxy.qcow2 \
           --property hw_architecture='x86_64' \
           --property hw_rng_model=virtio
       register: output

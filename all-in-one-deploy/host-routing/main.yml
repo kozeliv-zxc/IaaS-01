@@ -1,0 +1,31 @@
+- name: Host routing setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Copy setup-brs.sh
+      become: true
+      ansible.builtin.copy:
+        src: setup-brs.sh
+        dest: /usr/local/bin/setup-brs.sh
+        mode: '0755'
+    - name: Copy setup-brs.service
+      become: true
+      ansible.builtin.copy:
+        src: setup-brs.service
+        dest: /etc/systemd/system/setup-brs.service
+        mode: '0644'
+    - name: Enable setup-brs.service
+      become: true
+      ansible.builtin.shell: |
+        systemctl enable setup-brs.service
+        systemctl start setup-brs.service
+      register: output
+      changed_when: output.rc == 0
+    - name: Enable ipv4 interface forwarding
+      become: true
+      ansible.builtin.replace:
+        path: /etc/sysctl.conf
+        regexp: '#net.ipv4.ip_forward=1'
+        replace: 'net.ipv4.ip_forward=1'
