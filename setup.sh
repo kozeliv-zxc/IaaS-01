@@ -10,9 +10,9 @@ if [ $user != "root" ]; then
 fi
 
 if [ $dnf ]; then
-    dnf install -y git python3-devel libffi-devel gcc openssl-devel python3-libselinux
+    dnf install -y git python3-devel libffi-devel gcc openssl-devel python3-libselinux curl
 elif [ $apt ]; then
-    apt install -y git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv pkg-config libdbus-glib-1-dev
+    apt install -y git python3-dev python3-pip libffi-dev gcc libssl-dev python3-venv pkg-config libdbus-glib-1-dev curl
 else
     echo "what the..."
 fi
