@@ -48,5 +48,8 @@
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml
 
+- name: Host routing
+  ansible.builtin.import_playbook: host-routing/main.yml
+
 - name: Post deploy
   ansible.builtin.import_playbook: post-deploy.yml
