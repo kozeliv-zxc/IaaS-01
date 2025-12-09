@@ -7,6 +7,6 @@
         name: DMZ-host
         image: debian-12-generic-amd64
         flavor: m1.small
-        network: dmz-net1
+        nics:
+          - {'net-name':'dmz-net1'}
         key_name: mykey
-        auto_floating_ip: true

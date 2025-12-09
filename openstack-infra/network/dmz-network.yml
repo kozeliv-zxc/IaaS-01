@@ -11,7 +11,7 @@
         name: dmz-subnet1
         network: dmz-net1
         ip_version: 4
-        enable_dhcp: false
+        enable_dhcp: true
         cidr: 70.70.70.0/24
         gateway_ip: 70.70.70.1
         dns_nameservers: ['1.1.1.1', '1.0.0.1']
