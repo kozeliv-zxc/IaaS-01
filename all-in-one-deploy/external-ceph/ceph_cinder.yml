@@ -1,0 +1,81 @@
+- name: Configuring Ceph Cinder backend settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Configure cinder_volume_ceph.conf fsid
+      ansible.builtin.replace:
+        path: cinder_volume_ceph.conf
+        regexp: 'fsid = fsid'
+        replace: 'fsid = {{ fsid }}'
+    - name: Configure cinder_volume_ceph.conf keyring
+      ansible.builtin.replace:
+        path: cinder_volume_ceph.conf
+        regexp: 'keyring = keyring'
+        replace: 'keyring = {{ cinder_volume_keyring_path }}'
+    - name: Configure cinder_volume_ceph.conf remote hostname
+      ansible.builtin.replace:
+        path: cinder_volume_ceph.conf
+        regexp: 'mon_initial_members = hostname'
+        replace: 'mon_initial_members = {{ mon_hostname }}'
+    - name: Configure cinder_volume_ceph.conf remote ip
+      ansible.builtin.replace:
+        path: cinder_volume_ceph.conf
+        regexp: 'mon_host = ip'
+        replace: 'mon_host = {{ mon_ip }}'
+    - name: Create Cinder Volume config directory
+      ansible.builtin.command: "mkdir -p /etc/kolla/config/cinder/cinder-volume/"
+      register: output
+      changed_when: output.rc == 0
+    - name: Copy Ceph Cinder Volume keyring
+      ansible.builtin.copy:
+        src: {{ cinder_volume_keyring_path }}
+        dest: /etc/kolla/config/cinder/cinder-volume/ceph.client.cinder.keyring
+        mode: '0600'
+    - name: Copy Ceph config
+      ansible.builtin.copy:
+        src: cinder_volume_ceph.conf
+        dest: /etc/kolla/config/cinder/cinder-volume/ceph.conf
+        mode: '0644'
+
+
+    - name: Configure cinder_backup_ceph.conf fsid
+      ansible.builtin.replace:
+        path: cinder_backup_ceph.conf
+        regexp: 'fsid = fsid'
+        replace: 'fsid = {{ fsid }}'
+    - name: Configure cinder_backup_ceph.conf keyring
+      ansible.builtin.replace:
+        path: cinder_backup_ceph.conf
+        regexp: 'keyring = keyring'
+        replace: 'keyring = {{ cinder_backup_keyring_path }}'
+    - name: Configure cinder_backup_ceph.conf remote hostname
+      ansible.builtin.replace:
+        path: cinder_backup_ceph.conf
+        regexp: 'mon_initial_members = hostname'
+        replace: 'mon_initial_members = {{ mon_hostname }}'
+    - name: Configure cinder_backup_ceph.conf remote ip
+      ansible.builtin.replace:
+        path: cinder_backup_ceph.conf
+        regexp: 'mon_host = ip'
+        replace: 'mon_host = {{ mon_ip }}'
+    - name: Create Cinder Backup config directory
+      ansible.builtin.command: "mkdir -p /etc/kolla/config/cinder/cinder-backup/"
+      register: output
+      changed_when: output.rc == 0
+    - name: Copy Ceph Cinder Backup keyring
+      ansible.builtin.copy:
+        src: {{ cinder_backup_keyring_path }}
+        dest: /etc/kolla/config/cinder/cinder-backup/ceph.client.cinder-backup.keyring
+        mode: '0600'
+    - name: Copy Ceph Cinder Backup-Volume keyring
+      ansible.builtin.copy:
+        src: {{ cinder_volume_keyring_path }}
+        dest: /etc/kolla/config/cinder/cinder-backup/ceph.client.cinder.keyring
+        mode: '0600'
+    - name: Copy Ceph config
+      ansible.builtin.copy:
+        src: cinder_backup_ceph.conf
+        dest: /etc/kolla/config/cinder/cinder-backup/ceph.conf
+        mode: '0644'

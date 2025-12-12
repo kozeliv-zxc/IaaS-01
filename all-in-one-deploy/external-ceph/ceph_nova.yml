@@ -1,0 +1,41 @@
+- name: Configuring Ceph Nova backend settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Configure nova_ceph.conf fsid
+      ansible.builtin.replace:
+        path: nova_ceph.conf
+        regexp: 'fsid = fsid'
+        replace: 'fsid = {{ fsid }}'
+    - name: Configure nova_ceph.conf keyring
+      ansible.builtin.replace:
+        path: nova_ceph.conf
+        regexp: 'keyring = keyring'
+        replace: 'keyring = {{ cinder_volume_keyring_path }}'
+    - name: Configure nova_ceph.conf remote hostname
+      ansible.builtin.replace:
+        path: nova_ceph.conf
+        regexp: 'mon_initial_members = hostname'
+        replace: 'mon_initial_members = {{ mon_hostname }}'
+    - name: Configure nova_ceph.conf remote ip
+      ansible.builtin.replace:
+        path: nova_ceph.conf
+        regexp: 'mon_host = ip'
+        replace: 'mon_host = {{ mon_ip }}'
+    
+    - name: Create Nova config directory
+      ansible.builtin.command: "mkdir -p /etc/kolla/config/nova/"
+      register: output
+      changed_when: output.rc == 0
+    - name: Copy Ceph Nova keyring
+      ansible.builtin.copy:
+        src: {{ cinder_volume_keyring_path }}
+        dest: /etc/kolla/config/nova/ceph.client.cinder.keyring
+        mode: '0600'
+    - name: Copy Ceph config
+      ansible.builtin.copy:
+        src: nova_ceph.conf
+        dest: /etc/kolla/config/nova/ceph.conf
+        mode: '0644'

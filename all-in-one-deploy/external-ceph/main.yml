@@ -8,5 +8,14 @@
       ansible.builtin.debug:
         msg: ceph
 
+- name: Enable Ceph Glance
+  ansible.builtin.import_playbook: ceph_glance.yml
+
+- name: Enable Ceph Cinder
+  ansible.builtin.import_playbook: ceph_cinder.yml
+
+- name: Enable Ceph Nova
+  ansible.builtin.import_playbook: ceph_nova.yml
+
 - name: Enable Ceph backend
   ansible.builtin.import_playbook: setup-config-files.yml

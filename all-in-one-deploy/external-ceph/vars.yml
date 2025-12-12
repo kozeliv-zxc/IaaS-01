@@ -1,0 +1,6 @@
+fsid: "a8704118-d5de-11f0-b422-22024d0545c7"
+mon_hostname: "grind"
+mon_ip: "192.168.50.226"
+glance_keyring_path: "/etc/ceph/ceph.client.glance.keyring"
+cinder_volume_keyring_path: "/etc/ceph/ceph.client.cinder.keyring"
+cinder_backup_keyring_path: "/etc/ceph/ceph.client.cinder-backup.keyring"

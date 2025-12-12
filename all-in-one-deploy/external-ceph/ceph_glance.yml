@@ -1,0 +1,41 @@
+- name: Configuring Ceph Glance backend settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Configure glance_ceph.conf fsid
+      ansible.builtin.replace:
+        path: glance_ceph.conf
+        regexp: 'fsid = fsid'
+        replace: 'fsid = {{ fsid }}'
+    - name: Configure glance_ceph.conf keyring
+      ansible.builtin.replace:
+        path: glance_ceph.conf
+        regexp: 'keyring = keyring'
+        replace: 'keyring = {{ glance_keyring_path }}'
+    - name: Configure glance_ceph.conf remote hostname
+      ansible.builtin.replace:
+        path: glance_ceph.conf
+        regexp: 'mon_initial_members = hostname'
+        replace: 'mon_initial_members = {{ mon_hostname }}'
+    - name: Configure glance_ceph.conf remote ip
+      ansible.builtin.replace:
+        path: glance_ceph.conf
+        regexp: 'mon_host = ip'
+        replace: 'mon_host = {{ mon_ip }}'
+    
+    - name: Create Glance config directory
+      ansible.builtin.command: "mkdir -p /etc/kolla/config/glance/"
+      register: output
+      changed_when: output.rc == 0
+    - name: Copy Ceph Glance keyring
+      ansible.builtin.copy:
+        src: {{ glance_keyring_path }}
+        dest: /etc/kolla/config/glance/ceph.client.glance.keyring
+        mode: '0600'
+    - name: Copy Ceph config
+      ansible.builtin.copy:
+        src: glance_ceph.conf
+        dest: /etc/kolla/config/glance/ceph.conf
+        mode: '0644'

@@ -45,6 +45,9 @@
 - name: Enable Octavia
   ansible.builtin.import_playbook: octavia/main.yml
 
+- name: External Ceph Backend
+  ansible.builtin.import_playbook: external-ceph/main.yml
+
 - name: AIO Deploy
   ansible.builtin.import_playbook: aio-deploy.yml
 

@@ -10,3 +10,15 @@
         path: /etc/kolla/globals.yml
         regexp: '#glance_backend_ceph: "no"'
         replace: 'glance_backend_ceph: "yes"'
+    - name: Enable Cinder backend Ceph 1.0
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#cinder_backend_ceph: "no"'
+        replace: 'cinder_backend_ceph: "yes"'
+    - name: Enable Nova backend Ceph 1.0
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#nova_backend_ceph: "no"'
+        replace: 'nova_backend_ceph: "yes"'
