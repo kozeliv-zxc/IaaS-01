@@ -1,0 +1,12 @@
+- name: External Ceph intergrate
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Ceph
+      ansible.builtin.debug:
+        msg: ceph
+
+- name: Enable Ceph backend
+  ansible.builtin.import_playbook: setup-config-files.yml
