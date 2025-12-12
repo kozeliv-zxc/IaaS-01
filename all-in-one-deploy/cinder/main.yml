@@ -4,21 +4,24 @@
   remote_user: root
   connection: local
   tasks:
-    - name: Install dependencies
-      become: true
-      ansible.builtin.command: apt -y install lvm2
-      register: output
-      changed_when: output.rc == 0
-    - name: Initialize physical volume
-      become: true
-      ansible.builtin.command: pvcreate -ffy {{ device }}
-      register: output
-      changed_when: output.rc == 0
-    - name: Create volume group
-      become: true
-      ansible.builtin.command: vgcreate {{ volume_group_name }} {{ device }}
-      register: output
-      changed_when: output.rc == 0
+#    - name: Install dependencies
+#      become: true
+#      ansible.builtin.command: apt -y install lvm2
+#      register: output
+#      changed_when: output.rc == 0
+#    - name: Initialize physical volume
+#      become: true
+#      ansible.builtin.command: pvcreate -ffy {{ device }}
+#      register: output
+#      changed_when: output.rc == 0
+#    - name: Create volume group
+#      become: true
+#      ansible.builtin.command: vgcreate {{ volume_group_name }} {{ device }}
+#      register: output
+#      changed_when: output.rc == 0
+    - name: Cinder
+      ansible.builtin.debug:
+        msg: "cinder"
 
 - name: Enable Cinder service
   ansible.builtin.import_playbook: setup-config-files.yml
