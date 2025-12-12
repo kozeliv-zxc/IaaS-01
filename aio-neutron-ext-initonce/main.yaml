@@ -1,0 +1,24 @@
+- name: Host routing setup
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Copy neutron-ext.sh
+      become: true
+      ansible.builtin.copy:
+        src: setup-brs.sh
+        dest: /usr/local/bin/neutron-ext.sh
+        mode: '0755'
+    - name: Copy neutron-ext.service
+      become: true
+      ansible.builtin.copy:
+        src: neutron-ext.service
+        dest: /etc/systemd/system/neutron-ext.service
+        mode: '0644'
+    - name: Enable neutron-ext.service
+      become: true
+      ansible.builtin.shell: |
+        systemctl enable neutron-ext.service
+        systemctl start neutron-ext.service
+      register: output
+      changed_when: output.rc == 0

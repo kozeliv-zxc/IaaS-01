@@ -1,0 +1,16 @@
+[Unit]
+Description=Custom Neutron external NAT Bridge Setup
+Wants=network-online.target openvswitch.service
+After=network-online.target openvswitch.service
+# make sure we run before Neutron plugs in br-ex
+Before=neutron-openvswitch-agent.service
+
+[Service]
+Type=oneshot
+# give netplan / cloud-init a few seconds to finish
+ExecStartPre=/bin/sleep 20
+ExecStart=/usr/local/bin/neutron-ext.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
