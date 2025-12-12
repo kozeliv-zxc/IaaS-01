@@ -1,5 +1,5 @@
 [Unit]
-Description=Custom br-exnat NAT Bridge Setup
+Description=Custom Neutron external NAT Bridge Setup
 Wants=network-online.target openvswitch.service
 After=network-online.target openvswitch.service
 # make sure we run before Neutron plugs in br-ex
