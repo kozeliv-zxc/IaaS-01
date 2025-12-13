@@ -30,7 +30,7 @@
       changed_when: output.rc == 0
     - name: Copy Ceph Cinder Volume keyring
       ansible.builtin.copy:
-        src: {{ cinder_volume_keyring_path }}
+        src: '{{ cinder_volume_keyring_path }}'
         dest: /etc/kolla/config/cinder/cinder-volume/ceph.client.cinder.keyring
         mode: '0600'
     - name: Copy Ceph config
