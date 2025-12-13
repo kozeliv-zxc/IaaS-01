@@ -31,7 +31,7 @@
       changed_when: output.rc == 0
     - name: Copy Ceph Glance keyring
       ansible.builtin.copy:
-        src: {{ glance_keyring_path }}
+        src: '{{ glance_keyring_path }}'
         dest: /etc/kolla/config/glance/ceph.client.glance.keyring
         mode: '0600'
     - name: Copy Ceph config
