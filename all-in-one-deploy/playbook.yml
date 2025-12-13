@@ -24,9 +24,6 @@
         name: docker
         state: started
 
-- name: Configure cinder
-  ansible.builtin.import_playbook: cinder/main.yml
-
 - name: Configuring globals.yml settings
   ansible.builtin.import_playbook: setup-config-files.yml
 
