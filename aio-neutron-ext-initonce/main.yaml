@@ -6,7 +6,7 @@
     - name: Copy neutron-ext.sh
       become: true
       ansible.builtin.copy:
-        src: setup-brs.sh
+        src: neutron-ext.sh
         dest: /usr/local/bin/neutron-ext.sh
         mode: '0755'
     - name: Copy neutron-ext.service
