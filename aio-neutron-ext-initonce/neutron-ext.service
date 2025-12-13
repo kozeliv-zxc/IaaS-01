@@ -8,7 +8,7 @@ Before=neutron-openvswitch-agent.service
 [Service]
 Type=oneshot
 # give netplan / cloud-init a few seconds to finish
-ExecStartPre=/bin/sleep 20
+ExecStartPre=/bin/sleep 10
 ExecStart=/usr/local/bin/neutron-ext.sh
 RemainAfterExit=yes
 
