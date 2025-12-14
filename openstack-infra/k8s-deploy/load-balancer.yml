@@ -7,9 +7,6 @@
         name: talos-control-plane
         vip_subnet: public1-subnet
       register: talos_ctrl_plane_info
-    - name: a
-      ansible.builtin.debug:
-        msg: '{{ talos_ctrl_plane_info }}'
     - name: Create loadbalancer listener
       openstack.cloud.lb_listener:
         state: present
