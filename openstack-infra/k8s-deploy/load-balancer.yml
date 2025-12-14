@@ -1,0 +1,85 @@
+- name: Prepare loadbalancer for Talos
+  hosts: localhost
+  tasks:
+    - name: Create loadbalancer
+      openstack.cloud.loadbalancer:
+        state: present
+        name: talos-control-plane
+        vip_subnet: public1-subnet
+      register: talos_ctrl_plane_info
+    - name: Create loadbalancer listener
+      openstack.cloud.lb_listener:
+        state: present
+        name: talos-control-plane-listener
+        protocol: TCP
+        protocol_port: 6443
+        load_balancer: talos-control-plane
+    - name: Create loadbalancer pool
+      openstack.cloud.lb_pool:
+        state: present
+        name: talos-control-plane-pool
+        lb_algorithm: ROUND_ROBIN
+        listener: talos-control-plane-listener
+        protocol: TCP
+    - name: Create loadbalancer healthmonitor
+      openstack.cloud.lb_health_monitor:
+        state: present
+        name: talos-control-plane-healthmonitor
+        delay: 5
+        max_retries: 4
+        health_monitor_timeout: 10
+        type: TCP
+        pool: talos-control-plane-pool
+
+    - name: Cluster configuration generation 1.0
+      ansible.builtin.command: 'mkdir /root/talos-k8s-openstack'
+      register: output
+      changed_when: output.rc == 0
+    - name: Cluster configuration generation 1.1
+      ansible.builtin.command: 'talosctl gen config \
+       talos-k8s-openstack https://{{ talos_ctrl_plane_info.vip_address }}:6443 \
+       --output /root/talos-k8s-openstack'
+      register: output
+      changed_when: output.rc == 0
+
+    - name: Get controller node init-cloud
+      ansible.builtin.slurp:
+        path: /root/talos-k8s-openstack/controlplane.yaml
+      register: controller_init
+    - name: Create talos-control-plane-1
+      openstack.cloud.server:
+        state: present
+        name: talos-control-plane-1
+        flavor: talos.controller
+        nics:
+          - {'net-name':'dmz-net1'}
+        image: 'Talos Linux v1.11.5'
+        userdata: '{{ controller_init.content | b64decode }}'
+      register: talos_ctrl_plane_1_info
+
+    - name: Get worker node init-cloud
+      ansible.builtin.slurp:
+        path: /root/talos-k8s-openstack/worker.yaml
+      register: worker_init
+    - name: Create talos-worker-1
+      openstack.cloud.server:
+        state: present
+        name: talos-worker-1
+        flavor: talos.worker
+        nics:
+          - {'net-name':'dmz-net1'}
+        image: 'Talos Linux v1.11.5'
+        userdata: '{{ worker_init.content | b64decode }}'
+
+    - name: Add talos-control-plane-1 to talos-control-plane-pool
+      openstack.cloud.lb_member:
+        state: present
+        name: ctrl-plane-1
+        pool: talos-control-plane-pool
+        subnet_id: dmz-subnet1
+        address: '{{ talos_ctrl_plane_1_info.access_ipv4 }}'
+        protocol_port: 6443
+    - name: Assign floating ip for talos-control-plane-1
+      openstack.cloud.floating_ip:
+        state: present
+        server: talos-control-plane-1
