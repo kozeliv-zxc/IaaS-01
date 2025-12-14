@@ -12,6 +12,7 @@
         replace: |
           enable_octavia: "yes"
           octavia_network_type: "tenant"
+          octavia_interface_wait_timeout: 30
     - name: Enable redis for Octavia Jobboard
       become: true
       ansible.builtin.replace:
