@@ -58,7 +58,7 @@
         name: ctrl-plane-1
         pool: talos-control-plane-pool
         subnet_id: '{{ dmz_subnet1_info.subnets[0].id }}'
-        address: '{{ talos_ctrl_plane_1_port_info.port.fixed_ips[0] }}'
+        address: '{{ talos_ctrl_plane_1_port_info.port.fixed_ips[0].ip_address }}'
         protocol_port: 6443
 
     - name: Cluster configuration generation 1.0
