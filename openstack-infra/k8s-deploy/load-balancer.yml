@@ -54,6 +54,8 @@
         nics:
           - {'net-name':'dmz-net1'}
         image: 'Talos Linux v1.11.5'
+        security_groups:
+          - default
         userdata: '{{ controller_init.content | b64decode }}'
       register: talos_ctrl_plane_1_info
 
@@ -69,6 +71,8 @@
         nics:
           - {'net-name':'dmz-net1'}
         image: 'Talos Linux v1.11.5'
+        security_groups:
+          - default
         userdata: '{{ worker_init.content | b64decode }}'
 
     - name: Get dmz-subnet1 id
