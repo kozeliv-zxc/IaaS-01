@@ -77,7 +77,7 @@
         name: ctrl-plane-1
         pool: talos-control-plane-pool
         subnet_id: dmz-subnet1
-        address: '{{ talos_ctrl_plane_1_info.access_ipv4 }}'
+        address: '{{ talos_ctrl_plane_1_info.addresses.dmz-net1[0].addr }}'
         protocol_port: 6443
     - name: Assign floating ip for talos-control-plane-1
       openstack.cloud.floating_ip:
