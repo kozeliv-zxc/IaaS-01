@@ -10,14 +10,14 @@
       become: true
       ansible.builtin.replace:
         path: setup-brs.sh
-        regexp: 'NET_IF = eth0'
-        replace: 'NET_IF = {{ network_interface }}'
+        regexp: 'NET_IF=eth0'
+        replace: 'NET_IF={{ network_interface }}'
     - name: Config Neutron external bridge interface
       become: true
       ansible.builtin.replace:
         path: setup-brs.sh
-        regexp: 'NEUTRON_EXT_BRIDGE_IF = br-ex'
-        replace: 'NEUTRON_EXT_BRIDGE_IF = {{ neutron_external_bridge }}'
+        regexp: 'NEUTRON_EXT_BRIDGE_IF=br-ex'
+        replace: 'NEUTRON_EXT_BRIDGE_IF={{ neutron_external_bridge }}'
     - name: Copy setup-brs.sh
       become: true
       ansible.builtin.copy:

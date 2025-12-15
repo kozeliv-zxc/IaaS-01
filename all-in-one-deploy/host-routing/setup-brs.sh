@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NET_IF = eth0
-NEUTRON_EXT_BRIDGE_IF = br-ex
+NET_IF=eth0
+NEUTRON_EXT_BRIDGE_IF=br-ex
 
 if ! ip addr show dev $NEUTRON_EXT_BRIDGE_IF | grep -q "172.10.1.1"; then
     ip addr add 172.10.1.1/24 dev $NEUTRON_EXT_BRIDGE_IF
