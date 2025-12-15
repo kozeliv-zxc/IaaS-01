@@ -71,12 +71,16 @@
         image: 'Talos Linux v1.11.5'
         userdata: '{{ worker_init.content | b64decode }}'
 
+    - name: Get dmz-subnet1 id
+      openstack.cloud.subnets_info:
+        name: dmz-subnet1
+      register: dmz_subnet1_info
     - name: Add talos-control-plane-1 to talos-control-plane-pool
       openstack.cloud.lb_member:
         state: present
         name: ctrl-plane-1
         pool: talos-control-plane-pool
-        subnet_id: dmz-subnet1
+        subnet_id: '{{ dmz_subnet1_info[0].id }}'
         address: '{{ talos_ctrl_plane_1_info.server.addresses["dmz-net1"][0].addr }}'
         protocol_port: 6443
     - name: Assign floating ip for talos-control-plane-1
