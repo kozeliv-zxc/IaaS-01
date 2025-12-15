@@ -31,6 +31,36 @@
         type: TCP
         pool: talos-control-plane-pool
 
+    - name: Create talos-control-plane-1-port
+      openstack.cloud.port:
+        state: present
+        name: talos-control-plane-1-port
+        network: dmz-net1
+      register: talos_ctrl_plane_1_port_info
+    - name: Check talos-control-plane-1-port floating ip
+      openstack.cloud.floating_ip_info:
+        port: talos-control-plane-1-port
+      register: fips
+    - name: Assign talos-control-plane-1-port floating ip
+      ansible.builtin.command: openstack floating ip create \
+       --port talos-control-plane-1-port \
+       public1
+      when: fips.floating_ips | length == 0
+      register: output
+      changed_when: output.rc == 0
+    - name: Get dmz-subnet1 id
+      openstack.cloud.subnets_info:
+        name: dmz-subnet1
+      register: dmz_subnet1_info
+    - name: Add talos-control-plane-1-port to talos-control-plane-pool
+      openstack.cloud.lb_member:
+        state: present
+        name: ctrl-plane-1
+        pool: talos-control-plane-pool
+        subnet_id: '{{ dmz_subnet1_info.subnets[0].id }}'
+        address: '{{ talos_ctrl_plane_1_port_info.port.fixed_ips[0] }}'
+        protocol_port: 6443
+
     - name: Cluster configuration generation 1.0
       ansible.builtin.command: 'mkdir -p /root/talos-k8s-openstack'
       register: output
@@ -52,7 +82,7 @@
         name: talos-control-plane-1
         flavor: talos.controller
         nics:
-          - {'net-name':'dmz-net1'}
+          - {'port-name':'talos-control-plane-1-port'}
         image: 'Talos Linux v1.11.5'
         security_groups:
           - default
@@ -74,20 +104,3 @@
         security_groups:
           - default
         userdata: '{{ worker_init.content | b64decode }}'
-
-    - name: Get dmz-subnet1 id
-      openstack.cloud.subnets_info:
-        name: dmz-subnet1
-      register: dmz_subnet1_info
-    - name: Add talos-control-plane-1 to talos-control-plane-pool
-      openstack.cloud.lb_member:
-        state: present
-        name: ctrl-plane-1
-        pool: talos-control-plane-pool
-        subnet_id: '{{ dmz_subnet1_info.subnets[0].id }}'
-        address: '{{ talos_ctrl_plane_1_info.server.addresses["dmz-net1"][0].addr }}'
-        protocol_port: 6443
-    - name: Assign floating ip for talos-control-plane-1
-      openstack.cloud.floating_ip:
-        state: present
-        server: talos-control-plane-1
