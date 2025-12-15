@@ -80,7 +80,7 @@
         state: present
         name: ctrl-plane-1
         pool: talos-control-plane-pool
-        subnet_id: '{{ dmz_subnet1_info[0].id }}'
+        subnet_id: '{{ dmz_subnet1_info.subnets[0].id }}'
         address: '{{ talos_ctrl_plane_1_info.server.addresses["dmz-net1"][0].addr }}'
         protocol_port: 6443
     - name: Assign floating ip for talos-control-plane-1
