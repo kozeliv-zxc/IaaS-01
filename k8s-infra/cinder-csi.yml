@@ -1,0 +1,53 @@
+- name: Deploy Cinder CSI for k8s
+  hosts: localhost
+  vars_files:
+    - ../all-in-one-deploy/vars/global-vars.yml
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Set delete policy as default
+      become: true
+      ansible.builtin.replace:
+        path: cloud-provider-openstack-1.34.1/charts/cinder-csi-plugin/values.yaml
+        regexp: '(?s)^storageClass:.*?^#\s*any kind of custom StorageClasses.*$'
+        replace: |
+          storageClass:
+            enabled: true
+            delete:
+              isDefault: true
+              allowVolumeExpansion: true
+            retain:
+              isDefault: false
+              allowVolumeExpansion: true
+          # any kind of custom StorageClasses
+    - name: Get admin_keystone_password
+      become: true
+      ansible.builtin.shell: awk '/keystone_admin_password:/{print $2}' /etc/kolla/passwords.yml
+      register: output
+      changed_when: output.rc == 0
+    - name: Config secret for cinder csi plugin
+      become: true
+      ansible.builtin.replace:
+        path: cloud-provider-openstack-1.34.1/charts/cinder-csi-plugin/values.yaml
+        regexp: '(?s)^secret:.*?^#\s*ca-file=/etc/cacert/ca-bundle.crt*$'
+        replace: |
+          secret:
+            enabled: false
+            hostMount: true
+            create: false
+            filename: cloud.conf
+            data:
+              cloud.conf: |-
+                [Global]
+                tenant-domain-name=Default
+                user-domain-name=Default
+                tenant-name=admin
+                username=admin
+                password={{ output.stdout_lines[0] }}
+                auth-url=http://{{ kolla_internal_vip_address }}:5000
+                region=RegionOne
+                tls-insecure=true
+    - name: Helm deploy
+      ansible.builtin.command: helm install cinder-csi cpo/openstack-cinder-csi
+      register: output
+      changed_when: output.rc == 0
