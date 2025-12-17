@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
   username: forgejo
-  password: forgejo-pwd
+  password: Zm9yZ2Vqbw==
 kind: Secret
 metadata:
   name: app-secret
