@@ -118,7 +118,7 @@ service:
     port: 3000
     clusterIP:
     loadBalancerIP:
-    nodePort: 33000
+    nodePort: 30000
     externalTrafficPolicy:
     externalIPs:
     ipFamilyPolicy:
@@ -146,7 +146,7 @@ service:
     type: NodePort
     port: 22
     clusterIP:
-    loadBalancerIP: 33022
+    loadBalancerIP: 30022
     nodePort:
     externalTrafficPolicy:
     externalIPs:
