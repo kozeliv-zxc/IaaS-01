@@ -1,10 +1,10 @@
 apiVersion: v1
-data:
-  username: forgejo
-  password: Zm9yZ2Vqbw==
 kind: Secret
 metadata:
-  name: app-secret
+  name: forgejo-secret
+data:
+  username: Zm9yZ2Vqbw==
+  password: Zm9yZ2Vqbw==
 type: kubernetes.io/basic-auth
 
 ---
@@ -12,9 +12,9 @@ type: kubernetes.io/basic-auth
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cluster-example-initdb
+  name: forgejo-db-cluster
 spec:
-  instances: 3
+  instances: 1
 
   bootstrap:
     initdb:
