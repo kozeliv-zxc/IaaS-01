@@ -432,7 +432,7 @@ gitea:
     # existingSecret: gitea-admin-secret
     existingSecret:
     username: gitea_admin
-    password: ''
+    password: '1'
     email: 'gitea@local.domain'
     passwordMode: keepUpdated
 
