@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-db-auth
+data:
+  username: aGFyYm9y
+  password: aGFyYm9y
+type: kubernetes.io/basic-auth
+
+---
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: harbor-db-cluster
+spec:
+  instances: 1
+
+  bootstrap:
+    initdb:
+      database: harbor-db
+      owner: harbor
+      secret:
+        name: harbor-db-auth
+
+  storage:
+    size: 10Gi
