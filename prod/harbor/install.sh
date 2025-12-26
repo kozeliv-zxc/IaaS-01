@@ -1,3 +1,5 @@
+kubectl apply -f harbor-secret.yaml
+
 helm repo add harbor https://helm.goharbor.io
 
 helm repo update
