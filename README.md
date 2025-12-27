@@ -1,5 +1,4 @@
-z
-z
+IMPORTANT NOTICE: ALL OF CONFIG FILES IS CONFIGURED FOR DEMO PERPOSE, PRIVATE KEYS AND SECRETS COMMITTED DIRECTY INTO MAIN BRANCH, DO NOT USE FOR PRODUCTION!!!
 
 noticable configuration files that requires remote IP declaration (all-in-one-deploy):
 
