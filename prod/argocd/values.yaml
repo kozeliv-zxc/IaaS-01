@@ -42,7 +42,7 @@ crds:
 global:
   # -- Default domain used by all components
   ## Used for ingresses, certificates, SSO, notifications, etc.
-  domain: argocd.example.com
+  domain: 172.10.1.159
 
   # -- Runtime class name for all components
   runtimeClassName: ""
@@ -414,6 +414,7 @@ configs:
     # You can customize parameters by adding parameters here.
     # (e.g.)
     # otlp.address: ''
+    server.insecure: true
 
   # Argo CD RBAC policy configuration
   ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
@@ -2294,9 +2295,9 @@ server:
     # -- Server service labels
     labels: {}
     # -- Server service type
-    type: ClusterIP
+    type: NodePort
     # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
-    nodePortHttp: 30080
+    nodePortHttp: 30300
     # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
     nodePortHttps: 30443
     # -- Server service http port
