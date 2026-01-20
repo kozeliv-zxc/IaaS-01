@@ -1,0 +1,24 @@
+- name: Configuring Barbican service settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Specify Barbican crypto plugin
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#barbican_crypto_plugin: "simple_crypto"'
+        replace: 'barbican_crypto_plugin: "p11_crypto"'
+    - name: Specify Barbican crypto library
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#barbican_library_path: "/usr/lib/libCryptoki2_64.so"'
+        replace: 'barbican_library_path: "/usr/local/lib/softhsm/libsofthsm2.so"'
+    - name: Enable Barbican
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_barbican: "no"'
+        replace: 'enable_barbican: "yes"'

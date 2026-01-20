@@ -1,0 +1,12 @@
+- name: Barbican setup
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Barbican
+      ansible.builtin.debug:
+        msg: "Barbican"
+
+- name: Enable Barbican service
+  ansible.builtin.import_playbook: setup-config-files.yml
