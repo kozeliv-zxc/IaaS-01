@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Hook to initialize virtual ethernet after creating NAT interface
+#
+
+logger -t br-exnat-up.hook "$ADDRFAM $IFACE"
