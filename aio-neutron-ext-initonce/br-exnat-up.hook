@@ -3,4 +3,13 @@
 # Hook to initialize virtual ethernet after creating NAT interface
 #
 
-logger -t br-exnat-up.hook "$ADDRFAM $IFACE"
+interface=$IFACE
+
+if [ "$interface" = "br-exnat" ]; then
+	ip link add name veth-ext type veth peer name veth-peer
+	ip link set veth-ext up
+	ip link set veth-peer up
+	ip link set veth-ext master br-exnat
+	ip link set br-exnat up
+	logger -t br-exnat-up.hook "Initialized br-exnat"
+fi
