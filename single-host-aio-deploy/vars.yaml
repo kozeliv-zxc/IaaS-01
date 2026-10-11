@@ -1,0 +1,6 @@
+
+
+
+# ===== Cinder =====
+cinder_device: "/dev/sdb"
+cinder_volume_group_name: "cinder-volumes"

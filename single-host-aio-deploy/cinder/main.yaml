@@ -1,0 +1,19 @@
+- name: Cinder setup
+  vars_files: ../vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Initialize physical volume
+      become: true
+      ansible.builtin.command: pvcreate -ffy {{ cinder_device }}
+      register: output
+      changed_when: output.rc == 0
+    - name: Create volume group
+      become: true
+      ansible.builtin.command: vgcreate {{ cinder_volume_group_name }} {{ cinder_device }}
+      register: output
+      changed_when: output.rc == 0
+
+- name: Enable Cinder service
+  ansible.builtin.import_playbook: set-config.yml
