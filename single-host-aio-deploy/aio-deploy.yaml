@@ -1,0 +1,21 @@
+# not finished
+- name: Configuring globals.yml settings
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Bootstrap server
+      become: true
+      ansible.builtin.command: kolla-ansible bootstrap-servers -i /etc/kolla/ansible/inventory/all-in-one
+      register: output
+      changed_when: output.rc == 0
+    - name: Precheck
+      become: true
+      ansible.builtin.command: kolla-ansible prechecks -i /etc/kolla/ansible/inventory/all-in-one
+      register: output
+      changed_when: output.rc == 0
+    - name: Deploy
+      become: true
+      ansible.builtin.command: kolla-ansible deploy -i /etc/kolla/ansible/inventory/all-in-one
+      register: output
+      changed_when: output.rc == 0

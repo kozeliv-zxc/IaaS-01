@@ -24,16 +24,16 @@
   ansible.builtin.import_playbook: set-config.yaml
 
 - name: Enable Cinder
-  ansible.builtin.import_playbook: cinder/main.yml
+  ansible.builtin.import_playbook: cinder/main.yaml
 
 - name: Enable Octavia
-  ansible.builtin.import_playbook: octavia/main.yml
+  ansible.builtin.import_playbook: octavia/main.yaml
 
 - name: AIO Deploy
-  ansible.builtin.import_playbook: aio-deploy.yml
+  ansible.builtin.import_playbook: aio-deploy.yaml
 
 - name: Host routing
-  ansible.builtin.import_playbook: host-routing/main.yml
+  ansible.builtin.import_playbook: host-routing/main.yaml
 
 - name: Post deploy
-  ansible.builtin.import_playbook: post-deploy.yml
+  ansible.builtin.import_playbook: post-deploy.yaml
