@@ -7,3 +7,6 @@ kolla_internal_vip_address: "10.10.10.254"
 # ===== Cinder config =====
 cinder_device: "/dev/sdb"
 cinder_volume_group_name: "cinder-volumes"
+
+# ===== Host routing config =====
+neutron_external_bridge: "br-ex"
