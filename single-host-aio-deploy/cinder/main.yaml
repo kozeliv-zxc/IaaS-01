@@ -1,5 +1,6 @@
 - name: Cinder setup
-  vars_files: ../vars.yml
+  vars_files:
+    - ../vars.yaml
   hosts: localhost
   remote_user: root
   connection: local
