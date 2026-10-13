@@ -34,6 +34,3 @@
 
 - name: Host routing
   ansible.builtin.import_playbook: host-routing/main.yaml
-
-- name: Post deploy
-  ansible.builtin.import_playbook: post-deploy.yaml
