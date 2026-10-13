@@ -36,4 +36,4 @@
         msg: "octavia"
 
 - name: Enable Octavia service
-  ansible.builtin.import_playbook: set-config.yml
+  ansible.builtin.import_playbook: set-config.yaml
