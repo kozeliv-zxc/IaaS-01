@@ -16,4 +16,4 @@
       changed_when: output.rc == 0
 
 - name: Enable Cinder service
-  ansible.builtin.import_playbook: set-config.yml
+  ansible.builtin.import_playbook: set-config.yaml
