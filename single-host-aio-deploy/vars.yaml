@@ -9,4 +9,4 @@ cinder_device: "/dev/sdb"
 cinder_volume_group_name: "cinder-volumes"
 
 # ===== Host routing config =====
-neutron_external_bridge: "br-ex"
+neutron_external_bridge: "br-exnat"
