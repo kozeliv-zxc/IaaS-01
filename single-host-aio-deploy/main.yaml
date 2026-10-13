@@ -21,7 +21,7 @@
         state: started
 
 - name: Configuring globals.yml settings
-  ansible.builtin.import_playbook: setup-config-files.yml
+  ansible.builtin.import_playbook: set-config.yaml
 
 - name: Enable Cinder
   ansible.builtin.import_playbook: cinder/main.yml

@@ -1,0 +1,30 @@
+- name: Configuring general settings
+  vars_files: vars.yaml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Adjust kolla_base_distro
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#kolla_base_distro: "rocky"'
+        replace: 'kolla_base_distro: "{{ kolla_base_distro }}"'
+    - name: Replace network_interface
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#network_interface: "eth0"'
+        replace: 'network_interface: "{{ network_interface }}"'
+    - name: Replace neutron_external_interface
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#neutron_external_interface: "eth1"'
+        replace: 'neutron_external_interface: "{{ neutron_external_interface }}"'
+    - name: Replace kolla_internal_vip_address
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#kolla_internal_vip_address: "10.10.10.254"'
+        replace: 'kolla_internal_vip_address: "{{ kolla_internal_vip_address }}"'
