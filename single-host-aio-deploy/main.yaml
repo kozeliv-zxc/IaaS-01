@@ -4,21 +4,9 @@
   remote_user: root
   connection: local
   tasks:
-    - name: Docker inititial configuration (apt)
-      ansible.builtin.include_tasks: docker-apt.yml
-      when: ansible_facts['pkg_mgr'] == "apt"
-
-    - name: Enable Docker service
-      become: true
-      ansible.builtin.systemd:
-        name: docker
-        enabled: true
-
-    - name: Start Docker service
-      become: true
-      ansible.builtin.systemd:
-        name: docker
-        state: started
+    - name: x
+      ansible.builtin.debug:
+        msg: "x"
 
 - name: Configuring globals.yml settings
   ansible.builtin.import_playbook: set-config.yaml
