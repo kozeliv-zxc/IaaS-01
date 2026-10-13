@@ -1,6 +1,6 @@
 - name: Host routing setup
   vars_files:
-    - ../vars.yml
+    - ../vars.yaml
   hosts: localhost
   remote_user: root
   connection: local
