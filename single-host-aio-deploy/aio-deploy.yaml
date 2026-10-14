@@ -11,7 +11,7 @@
       changed_when: output.rc == 0
     - name: Precheck
       become: true
-      ansible.builtin.command: kolla-ansible prechecks -i /etc/kolla/ansible/inventory/all-in-one
+      ansible.builtin.command: kolla-ansible prechecks -i /etc/kolla/ansible/inventory/all-in-one --use-test-images
       register: output
       changed_when: output.rc == 0
     - name: Deploy

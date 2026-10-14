@@ -8,14 +8,14 @@
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
-        regexp: '#enable_cinder: "no"'
-        replace: 'enable_cinder: "yes"'
+        regexp: '#enable_cinder: false'
+        replace: 'enable_cinder: true'
     - name: Enable Cinder 1.1
       become: true
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
-        regexp: '#enable_cinder_backend_lvm: "no"'
-        replace: 'enable_cinder_backend_lvm: "yes"'
+        regexp: '#enable_cinder_backend_lvm: false'
+        replace: 'enable_cinder_backend_lvm: true'
     - name: Enable Cinder 1.2
       become: true
       ansible.builtin.replace:
