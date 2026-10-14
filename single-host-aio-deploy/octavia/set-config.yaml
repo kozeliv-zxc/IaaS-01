@@ -13,6 +13,13 @@
           enable_octavia: true
           # octavia_network_type: "tenant"
           octavia_interface_wait_timeout: 30
+    - name: Enable valkey
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#enable_valkey: false'
+        replace: |
+          enable_valkey: true
     - name: Define octavia amphora flavor
       become: true
       ansible.builtin.replace:
