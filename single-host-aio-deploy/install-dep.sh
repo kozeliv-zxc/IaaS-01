@@ -14,7 +14,7 @@ apt install -y curl \
 python3 -m venv /root/kolla-venv
 source /root/kolla-venv/bin/activate
 pip install -U pip
-pip install dbus-python
+pip install dbus-python docker
 pip install git+https://opendev.org/openstack/kolla-ansible@stable/2026.1
 mkdir -p /etc/kolla
 cp -r /root/kolla-venv/share/kolla-ansible/etc_examples/kolla/* /etc/kolla
