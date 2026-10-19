@@ -1,0 +1,5 @@
+auto {{ if_name }}
+iface {{ if_name }} inet static
+    address {{ if_address }}/{{ if_netmask }}
+    bridge_ports none
+    bridge_stp off

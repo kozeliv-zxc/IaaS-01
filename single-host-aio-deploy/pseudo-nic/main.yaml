@@ -1,17 +1,2 @@
-- name: Host routing setup
-  hosts: localhost
-  remote_user: root
-  connection: local
-  tasks:
-    - name: Copy br-exnat
-      become: true
-      ansible.builtin.copy:
-        src: br-exnat
-        dest: /etc/network/interfaces.d/br-exnat
-        mode: '0644'
-    - name: Copy br-exnat-up.hook
-      become: true
-      ansible.builtin.copy:
-        src: br-exnat-up.hook
-        dest: /etc/network/if-up.d/br-exnat-up
-        mode: '0755'
+- name: Configure physnet1
+  ansible.builtin.import_playbook: physnet1.yaml

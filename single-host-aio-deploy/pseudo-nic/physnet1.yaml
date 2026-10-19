@@ -1,0 +1,23 @@
+- name: Setup physnet1
+  hosts: localhost
+  remote_user: root
+  connection: local
+  vars:
+    if_name: br-exnat
+    if_address: 10.0.0.1
+    if_netmask: 24
+  tasks:
+    - name: Create interface
+      ansible.builtin.template:
+        src: templates/pseudo-nic.j2
+        dest: "/etc/network/interfaces.d/{{ if_name }}"
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Create ifup hook
+      ansible.builtin.template:
+        src: templates/nic.hook.j2
+        dest: "/etc/network/if-up.d/{{ if_name }}-up"
+        owner: root
+        group: root
+        mode: '0755'

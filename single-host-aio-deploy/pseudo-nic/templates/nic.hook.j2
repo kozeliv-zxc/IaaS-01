@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Hook to initialize virtual ethernet after creating NAT interface {{ if_name }}
+#
+
+interface=$IFACE
+
+if [ "$interface" = "{{ if_name }}" ]; then
+	ip link add name {{ if_name }}-veth-ext type veth peer name {{ if_name }}-veth-peer
+	ip link set {{ if_name }}-veth-ext up
+	ip link set {{ if_name }}-veth-peer up
+	ip link set {{ if_name }}-veth-ext master {{ if_name }}
+	ip link set {{ if_name }} up
+	logger -t {{ if_name }}-up.hook "Initialized {{ if_name }}"
+fi

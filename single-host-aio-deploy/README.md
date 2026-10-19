@@ -7,7 +7,7 @@ neutron_external_interface: "<secondary interface name>"
 
 if you have one spare network interface, or
 
-neutron_external_interface: "veth-peer"
+neutron_external_interface: "br-exnat-veth-peer"
 
 after setting a pseudo-one
 
