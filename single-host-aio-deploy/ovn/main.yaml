@@ -1,0 +1,12 @@
+- name: Configuring Open Virtual Network settings
+  vars_files: vars.yml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Enable OVN
+      become: true
+      ansible.builtin.replace:
+        path: /etc/kolla/globals.yml
+        regexp: '#neutron_plugin_agent: "openvswitch"'
+        replace: 'neutron_plugin_agent: "ovn"'
