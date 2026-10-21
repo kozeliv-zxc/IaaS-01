@@ -9,4 +9,7 @@
       ansible.builtin.replace:
         path: /etc/kolla/globals.yml
         regexp: '#neutron_plugin_agent: "openvswitch"'
-        replace: 'neutron_plugin_agent: "ovn"'
+        replace: |
+          neutron_plugin_agent: "ovn"
+          octavia_provider_drivers: "ovn:OVN provider"
+          octavia_provider_agents: "ovn"
