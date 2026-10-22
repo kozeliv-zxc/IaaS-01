@@ -1,0 +1,15 @@
+- name: Octavia setup
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Create horizon configuration folder
+      ansible.builtin.file:
+        path: /etc/kolla/config/horizon
+        state: directory
+        mode: '0644'
+    - name: Copy horizon custom settings
+      ansible.builtin.copy:
+        src: _9999-custom-settings.py
+        dest: /etc/kolla/config/horizon/_9999-custom-settings.py
+        mode: '0644'

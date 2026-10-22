@@ -1,0 +1,12 @@
+- name: Add new project (tenant)
+  hosts: localhost
+  tasks:
+    - name: Create CIA_operation_1 project
+      openstack.cloud.project:
+        state: present
+        name: CIA_operation_1
+        description: CIA top secret operation
+        domain: demoid
+        is_enabled: True
+        extra_specs:
+          internal_alias: demo_project

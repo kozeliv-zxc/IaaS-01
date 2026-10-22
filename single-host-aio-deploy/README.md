@@ -17,3 +17,5 @@ kolla_internal_vip_address: "<your network unused IP>"
 
 act as a stable API for multiple set up node (high avail); doesn't really matter if AIO, just set it to .254/24 of your network
 ```
+
+For openstack yaml file reference, please refer to the [official ansible galaxy openstack](https://galaxy.ansible.com/ui/repo/published/openstack/cloud/docs/)
