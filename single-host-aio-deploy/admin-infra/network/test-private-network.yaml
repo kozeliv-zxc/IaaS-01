@@ -1,0 +1,23 @@
+- name: Configure test private network
+  hosts: localhost
+  tasks:
+    - name: Create test private network
+      openstack.cloud.network:
+        state: present
+        name: test
+    - name: Create test private subnet
+      openstack.cloud.subnet:
+        state: present
+        name: test-subnet
+        network: test
+        ip_version: 4
+        enable_dhcp: true
+        cidr: 10.0.1.0/24
+        gateway_ip: 10.0.1.1
+        dns_nameservers: ['1.1.1.1', '1.0.0.1']
+    - name: Create external-router
+      openstack.cloud.router:
+        state: present
+        name: external-router
+        interfaces:
+          - test-subnet
