@@ -20,3 +20,8 @@
         dns_nameservers: ['1.1.1.1', '1.0.0.1']
         allocation_pool_start: 10.0.0.11
         allocation_pool_end: 10.0.0.100
+    - name: Create external-router
+      openstack.cloud.router:
+        state: present
+        name: external-router
+        network: public
