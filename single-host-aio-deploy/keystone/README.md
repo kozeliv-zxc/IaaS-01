@@ -1,0 +1,1 @@
+For keystone configurations, refer to [keystone configuration page](https://docs.openstack.org/keystone/2026.1/configuration/index.html)

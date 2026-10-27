@@ -1,0 +1,18 @@
+- name: Keystone setup
+  vars_files:
+    - ../vars.yaml
+  hosts: localhost
+  remote_user: root
+  connection: local
+  tasks:
+    - name: Create keystone configuration folder
+      ansible.builtin.file:
+        path: /etc/kolla/config/keystone
+        state: directory
+        mode: '0644'
+    - name: Copy 
+      become: true
+      ansible.builtin.copy:
+        src: policy.yaml
+        dest: /etc/kolla/config/keystone/policy.yaml
+        mode: '0644'

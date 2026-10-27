@@ -5,8 +5,12 @@ neutron_external_interface: "eth1"
 kolla_internal_vip_address: "10.10.10.254"
 
 # ===== Cinder config =====
+# hard drive devices; example "/dev/sdb,/dev/sdc"
 cinder_device: "/dev/sdb"
 cinder_volume_group_name: "cinder-volumes"
+# 0 by default, change to desired number of mirrors data like 1, 2, 3...
+# be aware that you need the equivalent number of hard drives in order to mirror data 
+cinder_lvm_mirror_copies: 0
 
 # ===== Host routing config =====
 neutron_external_bridge: "br-exnat"

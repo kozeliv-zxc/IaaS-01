@@ -1,0 +1,1 @@
+For cinder configurations, refer to [cinder.conf](https://docs.openstack.org/cinder/2026.1/configuration/block-storage/samples/cinder.conf.html)

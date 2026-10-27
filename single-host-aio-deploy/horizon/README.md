@@ -1,0 +1,1 @@
+For horizon configurations, refer to [horizon configuration page](https://docs.openstack.org/horizon/2026.1/configuration/settings.html)

@@ -7,14 +7,28 @@
   tasks:
     - name: Initialize physical volume
       become: true
-      ansible.builtin.command: pvcreate -ffy {{ cinder_device }}
+      ansible.builtin.command:
+        argv: "{{ ['pvcreate', '-ffy'] + cinder_device.split(',') }}"
       register: output
       changed_when: output.rc == 0
     - name: Create volume group
       become: true
-      ansible.builtin.command: vgcreate {{ cinder_volume_group_name }} {{ cinder_device }}
+      ansible.builtin.command:
+        argv: "{{ ['vgcreate', cinder_volume_group_name] + cinder_device.split(',') }}"
       register: output
       changed_when: output.rc == 0
+    - name: Create cinder configuration folder
+      ansible.builtin.file:
+        path: /etc/kolla/config/cinder
+        state: directory
+        mode: '0644'
+    - name: Copy cinder custom settings
+      ansible.builtin.template:
+        src: templates/cinder.conf.j2
+        dest: "/etc/kolla/config/cinder/cinder.conf"
+        owner: root
+        group: root
+        mode: '0644'
 
 - name: Enable Cinder service
   ansible.builtin.import_playbook: set-config.yaml
