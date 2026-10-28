@@ -1,0 +1,1 @@
+For cinder configurations, refer to [heat configuration page](https://docs.openstack.org/heat/2026.1/configuration/)

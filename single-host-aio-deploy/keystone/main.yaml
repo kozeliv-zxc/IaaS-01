@@ -5,6 +5,11 @@
   remote_user: root
   connection: local
   tasks:
+    - name: Get heat_domain_admin ID
+      openstack.cloud.identity_user_info:
+        name: heat_domain_admin
+        domain: heat_user_domain
+      register: heat_user_info
     - name: Create keystone configuration folder
       ansible.builtin.file:
         path: /etc/kolla/config/keystone
@@ -12,7 +17,11 @@
         mode: '0644'
     - name: Copy 
       become: true
-      ansible.builtin.copy:
-        src: policy.yaml
-        dest: /etc/kolla/config/keystone/policy.yaml
+      ansible.builtin.template:
+        src: templates/policy.yaml.j2
+        dest: "/etc/kolla/config/keystone/policy.yaml"
+        owner: root
+        group: root
         mode: '0644'
+      vars:
+        heat_domain_admin_id: "{{ heat_user_info.users[0].id }}"
