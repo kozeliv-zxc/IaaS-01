@@ -5,11 +5,18 @@
   remote_user: root
   connection: local
   tasks:
-    - name: Get heat_domain_admin ID
+    - name: Get admin ID
       openstack.cloud.identity_user_info:
-        name: heat_domain_admin
-        domain: heat_user_domain
-      register: heat_user_info
+        name: admin
+        domain: Default
+      register: admin_user_info
+    - name: Check for admin name uniqueness
+      ansible.builtin.assert:
+        that:
+          - admin_user_info.users | length == 1
+        fail_msg: >-
+          Expected exactly one admin in Default domain,
+          but found {{ admin_user_info.users | length }}.
     - name: Create keystone configuration folder
       ansible.builtin.file:
         path: /etc/kolla/config/keystone
@@ -24,4 +31,4 @@
         group: root
         mode: '0644'
       vars:
-        heat_domain_admin_id: "{{ heat_user_info.users[0].id }}"
+        admin_id: "{{ admin_user_info.users[0].id }}"

@@ -1,12 +1,12 @@
 # List domains.
 # GET  /v3/domains
 # Intended scope(s): system, domain, project
-"identity:list_domains": "(rule:admin_required and system_scope:all) or (role:reader and system_scope:all) or (user_id:{{ heat_domain_admin_id }})"
+"identity:list_domains": "(rule:admin_required and system_scope:all) or (role:reader and system_scope:all) or (user_id:{{ admin_id }})"
 
 # Create domain.
 # POST  /v3/domains
 # Intended scope(s): system, project
-"identity:create_domain": "(rule:admin_required and system_scope:all) or (user_id:{{ heat_domain_admin_id }})"
+"identity:create_domain": "(rule:admin_required and system_scope:all) or (user_id:{{ admin_id }})"
 
 # Update domain.
 # PATCH  /v3/domains/{domain_id}
@@ -22,12 +22,12 @@
 # GET  /v3/roles
 # HEAD  /v3/roles
 # Intended scope(s): system, domain, project
-"identity:list_roles": "(rule:admin_required and system_scope:all) or (role:manager and not domain_id:None) or (user_id:{{ heat_domain_admin_id }})"
+"identity:list_roles": "(rule:admin_required and system_scope:all) or (role:manager and not domain_id:None) or (user_id:{{ admin_id }})"
 
 # Create role.
 # POST  /v3/roles
 # Intended scope(s): system, project
-"identity:create_role": "(rule:admin_required and system_scope:all) or (user_id:{{ heat_domain_admin_id }})"
+"identity:create_role": "(rule:admin_required and system_scope:all) or (user_id:{{ admin_id }})"
 
 # Update role.
 # PATCH  /v3/roles/{role_id}
