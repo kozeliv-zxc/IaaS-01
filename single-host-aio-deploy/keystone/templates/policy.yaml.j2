@@ -17,34 +17,3 @@
 # DELETE  /v3/domains/{domain_id}
 # Intended scope(s): system, project
 "identity:delete_domain": "(rule:admin_required and system_scope:all)"
-
-# List roles.
-# GET  /v3/roles
-# HEAD  /v3/roles
-# Intended scope(s): system, domain, project
-"identity:list_roles": "(rule:admin_required and system_scope:all) or (role:manager and not domain_id:None) or (user_id:{{ admin_id }})"
-
-# Create role.
-# POST  /v3/roles
-# Intended scope(s): system, project
-"identity:create_role": "(rule:admin_required and system_scope:all) or (user_id:{{ admin_id }})"
-
-# Update role.
-# PATCH  /v3/roles/{role_id}
-# Intended scope(s): system, project
-#"identity:update_role": "rule:admin_required"
-
-# Delete role.
-# DELETE  /v3/roles/{role_id}
-# Intended scope(s): system, project
-"identity:delete_role": "(rule:admin_required and system_scope:all)"
-
-# List projects.
-# GET  /v3/projects
-# Intended scope(s): system, domain, project
-#"identity:list_projects": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.domain_id)s)"
-
-# List projects for user.
-# GET  /v3/users/{user_id}/projects
-# Intended scope(s): system, domain, project
-"identity:list_user_projects": "(role:reader and system_scope:all) or (role:reader and domain_id:%(target.user.domain_id)s) or user_id:%(target.user.id)s"
