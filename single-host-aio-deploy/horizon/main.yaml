@@ -13,3 +13,8 @@
         src: _9999-custom-settings.py
         dest: /etc/kolla/config/horizon/_9999-custom-settings.py
         mode: '0644'
+    - name: Copy horizon keystone custom policy
+      ansible.builtin.copy:
+        src: keystone_policy.yaml
+        dest: /etc/kolla/config/horizon/keystone_policy.yaml
+        mode: '0644'
