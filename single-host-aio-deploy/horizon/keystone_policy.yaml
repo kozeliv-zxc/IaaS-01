@@ -1,1 +1,1 @@
-"identity:create_project": "(rule:admin_required) or (role:manager) or (role:manager and domain_id:%(target.project.domain_id)s and not None:%(target.project.domain_id)s)"
+"identity:create_project": "(rule:admin_required) or (role:manager)"
